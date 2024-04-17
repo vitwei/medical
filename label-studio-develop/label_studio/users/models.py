@@ -28,7 +28,7 @@ year = models.IntegerField(_('year'), choices=YEAR_CHOICES, default=datetime.dat
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
-
+    
     def _create_user(self, email, password, **extra_fields):
         """
         Create and save a user with the given email and password.
@@ -112,7 +112,7 @@ class User(UserMixin, AbstractBaseUser, PermissionsMixin, UserLastActivityMixin)
     allow_newsletters = models.BooleanField(
         _('allow newsletters'), null=True, default=None, help_text=_('Allow sending newsletters to user')
     )
-
+    
     objects = UserManager()
 
     EMAIL_FIELD = 'email'
@@ -130,10 +130,57 @@ class User(UserMixin, AbstractBaseUser, PermissionsMixin, UserLastActivityMixin)
             models.Index(fields=['last_name']),
             models.Index(fields=['date_joined']),
         ]
+        permissions = [
+    ("projects_projectlist_get", "ProjectListAPI_list your projects"),
+    ("projects_projectlist_post", "ProjectListAPI_create new projects"),
+    
+    ("projects_project_get", "ProjectAPI_get project by id"),
+    ("projects_project_patch", "ProjectAPI_update project"),
+    ("projects_project_put", "ProjectAPI_unknow"),
+    ("projects_project_del", "ProjectAPI_delete project"),
+    ("projects_project_post", "ProjectAPI_unknow"),
+    
+    ("projects_projecttasklist_get", "ProjectTaskListAPI_list project taks"),
+    ("projects_projecttasklist_del", "ProjectTaskListAPI_delete all taks"),
+    ("projects_projecttasklist_post", "ProjectTaskListAPI_unknow"),
+    
+    ("data_import_post", "ImportAPI_import tasks"),
+    
+    ("data_export_get", "ExportAPI_Easy export of tasks and annotations"),
+    
+    ("data_manager_action_get", "ProjectActionsAPI_Get actions"),
+    ("data_manager_action_post", "ProjectActionsAPI_Post actions"),
+    
+    ("data_manager_view_get", "ViewAPI_Get actions"),
+    ("data_manager_view_post", "ViewAPI_Post actions"),
+    ("data_manager_view_patch", "ViewAPI_Patch actions"),
+    ("data_manager_view_put", "ViewAPI_Put actions"),
+    ("data_manager_view_super", "ViewAPI_super"),
+
+    ("ml_post", "MLBackendDetailAPI_post ML"),
+    ("ml_patch", "MLBackendDetailAPI_patch ML"),
+    ("ml_del", "MLBackendDetailAPI_delete ML"),
+
+    ("tasks_taskslist_get", "TaskListAPI_get tasks list"),
+    ("tasks_taskslist_post", "TaskListAPI_create task"),
+    
+    ("tasks_get", "TaskAPI_get task"),
+    ("tasks_put", "TaskAPI_unknow"),
+    ("tasks_patch", "TaskAPI_update task"),
+    ("tasks_delete", "TaskAPI_delete task"),
+    
+    ("tasks_annotationlist_get", "AnnotationsListAPI_get alltask annotations"),
+    ("tasks_annotationlist_post", "AnnotationsListAPI_create annotation"),
+    
+    ("tasks_annotations_get", "AnnotationAPI_get annotion by id"),
+    ("tasks_annotations_put", "AnnotationAPI_update annotion"),
+    ("tasks_annotations_patch", "AnnotationAPI_update annotion"),
+    ("tasks_annotations_super", "AnnotationAPI_super"),
+    ]
 
     @property
     def avatar_url(self):
-        if self.avatar:
+        if self.avatar: 
             if settings.CLOUD_FILE_STORAGE_ENABLED:
                 return self.avatar.url
             else:
