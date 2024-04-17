@@ -5,7 +5,7 @@ import logging
 import drf_yasg.openapi as openapi
 from core.feature_flags import flag_set
 from core.mixins import GetParentObjectMixin
-from core.permissions import ViewClassPermission, all_permissions
+from core.permissions import ViewClassPermission, all_permissions,annotationsPermission,annotationlistPermission,TaskPermission,TaskListtPermission
 from core.utils.common import DjangoFilterDescriptionInspector
 from core.utils.params import bool_from_request
 from data_manager.api import TaskListAPI as DMTaskListAPI
@@ -75,6 +75,7 @@ logger = logging.getLogger(__name__)
     ),
 )
 class TaskListAPI(DMTaskListAPI):
+    permission_classes=[TaskListtPermission]
     serializer_class = TaskSerializer
     permission_required = ViewClassPermission(
         GET=all_permissions.tasks_view,
@@ -140,6 +141,7 @@ class TaskListAPI(DMTaskListAPI):
     ),
 )
 class TaskAPI(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes=[TaskPermission]
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     permission_required = ViewClassPermission(
         GET=all_permissions.tasks_view,
@@ -261,6 +263,7 @@ class TaskAPI(generics.RetrieveUpdateDestroyAPIView):
     ),
 )
 class AnnotationAPI(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes=[annotationsPermission]
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     permission_required = ViewClassPermission(
         GET=all_permissions.annotations_view,
@@ -349,6 +352,7 @@ class AnnotationAPI(generics.RetrieveUpdateDestroyAPIView):
     ),
 )
 class AnnotationsListAPI(GetParentObjectMixin, generics.ListCreateAPIView):
+    permission_classes=[annotationlistPermission]
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     permission_required = ViewClassPermission(
         GET=all_permissions.annotations_view,

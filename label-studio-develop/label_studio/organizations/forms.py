@@ -22,3 +22,8 @@ class OrganizationSignupForm(ModelForm):
     class Meta:
         model = Organization
         fields = ('title',)
+
+class VIT_OrganizationForm(ModelForm):
+    class Meta:
+        model=Organization
+        fields = ('title',)

@@ -67,3 +67,207 @@ def make_perm(name, pred, overwrite=False):
 
 for _, permission_name in all_permissions:
     make_perm(permission_name, rules.is_authenticated)
+
+class ProjectListPermission(BasePermission):
+    message = "用户无权限" 
+    def has_permission(self, request, view):
+        if request.user.is_superuser:
+            return True
+        if request.method == 'GET':
+            if request.user.has_perm('users.projects_projectlist_get'):
+                return True
+        if request.method == 'POST':
+            ##要禁止创建项目必须禁止该projectlist_post选项
+            if request.user.has_perm('users.projects_projectlist_post'):
+                return True
+        return False
+    
+class ProjectPermission(BasePermission):
+    message = "用户无权限" 
+    def has_permission(self, request, view):
+        if request.user.is_superuser:
+            return True
+        # 这里的逻辑仅适用于基于对象的动作，如 retrieve, update, destroy
+        if request.method == 'GET':
+            if request.user.has_perm('users.projects_project_get'):
+                return True
+        if request.method == 'PUT':
+            if request.user.has_perm('users.projects_project_put'):
+                return True
+        if request.method == 'DELETE':
+            if request.user.has_perm('users.projects_project_del'):
+                return True
+        if request.method == 'PATCH':
+            if request.user.has_perm('users.projects_project_patch'):
+                return True
+        if request.method == 'POST':
+            if request.user.has_perm('users.projects_project_post'):
+                return True
+        return False
+    
+class ProjectTaskListPermission(BasePermission):
+    message = "用户无权限" 
+    def has_permission(self, request, view):
+        if request.user.is_superuser:
+            return True
+        # 这里的逻辑仅适用于基于对象的动作，如 retrieve, update, destroy
+        if request.method == 'GET':
+            if request.user.has_perm('users.projects_projecttasklist_get'):
+                return True
+        if request.method == 'DELETE':
+            if request.user.has_perm('users.projects_projecttasklist_del'):
+                return True
+        if request.method == 'POST':
+            if request.user.has_perm('users.projects_projecttasklist_post'):
+                return True
+        return False    
+    
+class ProjectimportPermission(BasePermission):
+    message = "用户无权限" 
+    def has_permission(self, request, view):
+        if request.user.is_superuser:
+            return True
+        if request.method == 'POST':
+            if request.user.has_perm('users.data_import_post'):
+                return True
+        return False
+    
+class ProjectexportPermission(BasePermission):
+    message = "用户无权限" 
+    def has_permission(self, request, view):
+        if request.user.is_superuser:
+            return True
+        # 这里的逻辑仅适用于基于对象的动作，如 retrieve, update, destroy
+        if request.method == 'GET':
+            if request.user.has_perm('users.data_export_get'):
+                return True
+        return False
+
+class dataactionPermission(BasePermission):
+    message = "用户无权限" 
+    def has_permission(self, request, view):
+        if request.user.is_superuser:
+            return True
+        #view project inner tasks
+        if request.method == 'GET':
+            if request.user.has_perm('users.data_manager_action_get'):
+                return True
+         #charge project inner tasks
+        if request.method == 'POST':
+            if request.user.has_perm('users.data_manager_action_post'):
+                return True
+        return False
+
+class dataviewPermission(BasePermission):
+    message = "用户无权限" 
+    def has_permission(self, request, view):
+        if request.user.is_superuser:
+            return True
+        if request.method == 'GET':
+            if request.user.has_perm('users.data_manager_view_get'):
+                return True
+        if request.method == 'PUT':
+            if request.user.has_perm('users.data_manager_view_put'):
+                return True
+        if request.method == 'DELETE':
+                return True
+        if request.method == 'PATCH':
+            if request.user.has_perm('users.data_manager_view_patch'):
+                return True
+        if request.method == 'POST':
+            if request.user.has_perm('users.data_manager_view_post'):
+                return True
+        return False
+    def has_object_permission(self, request, view, obj):
+        if obj.completed_by==request.user or request.user.has_perm('users.data_manager_view_super'):
+            return True
+        return False
+
+class mlPermission(BasePermission):
+    message = "用户无权限" 
+    def has_permission(self, request, view):
+        if request.user.is_superuser:
+            return True
+        if request.method == 'DELETE':
+            if request.user.has_perm('users.ml_del'):
+                return True
+        if request.method == 'PATCH':
+            if request.user.has_perm('users.ml_patch'):
+                return True
+        if request.method == 'POST':
+            if request.user.has_perm('users.ml_post'):
+                return True
+        return False
+
+class TaskListtPermission(BasePermission):
+    message = "用户无权限" 
+    def has_permission(self, request, view):
+        if request.user.is_superuser:
+            return True
+        if request.method == 'GET':
+            if request.user.has_perm('users.tasks_taskslist_get'):
+                return True
+        if request.method == 'POST':
+            ##要禁止创建项目必须禁止该projectlist_post选项
+            if request.user.has_perm('users.tasks_taskslist_post'):
+                return True
+        return False
+
+class TaskPermission(BasePermission):
+    message = "用户无权限" 
+    def has_permission(self, request, view):
+        if request.user.is_superuser:
+            return True
+        # 这里的逻辑仅适用于基于对象的动作，如 retrieve, update, destroy
+        if request.method == 'GET':
+            if request.user.has_perm('users.tasks_get'):
+                return True
+        if request.method == 'PUT':
+            if request.user.has_perm('users.tasks_put'):
+                return True
+        if request.method == 'DELETE':
+            if request.user.has_perm('users.tasks_delete'):
+                return True
+        if request.method == 'PATCH':
+            if request.user.has_perm('users.tasks_patch'):
+                return True
+        return False
+
+class annotationlistPermission(BasePermission):
+    message = "用户无权限" 
+    def has_permission(self, request, view):
+        if request.user.is_superuser:
+            return True
+        if request.method == 'GET':
+            if request.user.has_perm('users.tasks_annotationlist_get'):
+                return True
+        if request.method == 'POST':
+            ##要禁止创建项目必须禁止该projectlist_post选项
+            if request.user.has_perm('users.tasks_annotationlist_post'):
+                return True
+        return False    
+
+class annotationsPermission(BasePermission):
+    message = "用户无权限" 
+    def has_permission(self, request, view):
+        if request.user.is_superuser:
+            return True
+        #view project inner tasks
+        if request.method == 'GET':
+            if request.user.has_perm('users.tasks_annotations_get'):
+                return True
+         #charge project inner tasks
+        if request.method == 'PUT':
+            if request.user.has_perm('users.tasks_annotations_put'):
+                return True
+        if request.method == 'PATCH':
+            if request.user.has_perm('users.tasks_annotations_patch'):
+                return True
+        if request.method == 'DELETE':
+            return True
+        return False
+    
+    def has_object_permission(self, request, view, obj):
+        if obj.completed_by==request.user or request.user.has_perm('users.tasks_annotations_super'):
+            return True
+        return False

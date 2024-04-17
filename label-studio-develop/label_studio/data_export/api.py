@@ -7,7 +7,7 @@ from datetime import datetime
 from urllib.parse import urlparse
 
 from core.feature_flags import flag_set
-from core.permissions import all_permissions
+from core.permissions import all_permissions,ProjectexportPermission
 from core.redis import start_job_async_or_sync
 from core.utils.common import batch
 from django.conf import settings
@@ -154,6 +154,7 @@ class ExportFormatsListAPI(generics.RetrieveAPIView):
     ),
 )
 class ExportAPI(generics.RetrieveAPIView):
+    permission_classes=[ProjectexportPermission]
     permission_required = all_permissions.projects_change
 
     def get_queryset(self):

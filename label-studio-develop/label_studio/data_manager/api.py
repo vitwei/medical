@@ -4,7 +4,7 @@ import logging
 
 from asgiref.sync import async_to_sync, sync_to_async
 from core.feature_flags import flag_set
-from core.permissions import ViewClassPermission, all_permissions
+from core.permissions import ViewClassPermission, all_permissions,dataactionPermission,dataviewPermission
 from core.utils.common import int_from_request, load_func
 from core.utils.params import bool_from_request
 from data_manager.actions import get_all_actions, perform_action
@@ -95,6 +95,7 @@ logger = logging.getLogger(__name__)
     ),
 )
 class ViewAPI(viewsets.ModelViewSet):
+    permission_classes=[dataviewPermission]
     serializer_class = ViewSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['project']
@@ -354,6 +355,7 @@ class ProjectStateAPI(APIView):
     ),
 )
 class ProjectActionsAPI(APIView):
+    permission_classes=[dataactionPermission]
     permission_required = ViewClassPermission(
         GET=all_permissions.projects_view,
         POST=all_permissions.projects_view,

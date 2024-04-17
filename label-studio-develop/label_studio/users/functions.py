@@ -92,3 +92,163 @@ def proceed_registration(request, user_form, organization_form, next_page):
 def login(request, *args, **kwargs):
     request.session['last_login'] = time()
     return auth.login(request, *args, **kwargs)
+
+def VIT_base_save_user(request, next_page, user_form):
+    """Save user instance to DB"""
+    user = user_form.save()
+    user.username = user.email.split('@')[0]
+    user.save()
+
+    if Organization.objects.exists():
+        org = Organization.objects.get(title='TempOrganization')
+        org.add_user(user)
+    else:
+        org = Organization.create_organization(created_by=user, title='TempOrganization')
+    user.active_organization = org
+    user.save(update_fields=['active_organization'])
+
+    request.advanced_json = {
+        'email': user.email,
+        'allow_newsletters': user.allow_newsletters,
+        'update-notifications': 1,
+        'new-user': 1,
+    }
+    redirect_url = next_page if next_page else reverse('projects:project-index')
+    login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+    return redirect(redirect_url)
+
+def VIT_base_proceed_registration(request, user_form, organization_form, next_page):
+    """Register a new user for POST user_signup"""
+    # save user to db
+    response = VIT_base_save_user(request, next_page, user_form)
+    return response
+
+def VIT_super_save_user(request, next_page, user_form):
+    
+    
+    """Save super user instance to DB"""
+    user = user_form.save()
+    user.username = user.email.split('@')[0]
+    user.save()
+
+    if Organization.objects.exists():
+        org = Organization.objects.get(title='SuperOrganization')
+        org.add_user(user)
+    else:
+        org = Organization.create_organization(created_by=user, title='SuperOrganization')
+    user.active_organization = org
+    user.save(update_fields=['active_organization'])
+
+    request.advanced_json = {
+        'email': user.email,
+        'allow_newsletters': user.allow_newsletters,
+        'update-notifications': 1,
+        'new-user': 1,
+    }
+    redirect_url = next_page if next_page else reverse('projects:project-index')
+    login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+    return redirect(redirect_url)
+
+def VIT_super_proceed_registration(request, user_form, organization_form, next_page):
+    """Register a new user for POST user_signup"""
+    # save user to db
+    response = VIT_super_save_user(request, next_page, user_form)
+    return response
+
+def VIT_super_add_userorg(request,user_form, organization_form, next_page):
+    """Save super user instance to DB"""
+    adduser=users.models.User.object.get(email=str(user_form.email))
+    addorg=Organization.objects.get(title=str(organization_form.title))
+    delorg=Organization.objects.get(title=str(adduser.active_organization.title))
+    if addorg and adduser and delorg:
+        delorg.remove_user(adduser)
+        addorg.add_user(adduser)
+        adduser.active_organization = addorg
+        adduser.save(update_fields=['active_organization'])
+        return JsonResponse({'message': 'Operation success'})
+    return JsonResponse({'message': 'Operation failed'}, status=400)
+
+def VIT_super_proceed_useraddorg(request,user_form, organization_form, next_page):
+    """Register a new user for POST user_signup"""
+    # save user to db
+    response = VIT_super_add_userorg(request,user_form, organization_form, next_page)
+    return response
+
+def VIT_super_del_userorg(request,user_form, organization_form, next_page):
+    """Save super user instance to DB"""
+    adduser=users.models.User.object.get(email=str(user_form.email))
+    addorg=Organization.objects.get(title='TempOrganization')
+    delorg=Organization.objects.get(title=str(adduser.active_organization.title))
+    if adduser and addorg and delorg and adduser!= delorg:
+        delorg.remove_user(adduser)
+        addorg.add_user(adduser)
+        adduser.active_organization = addorg
+        adduser.save(update_fields=['active_organization'])
+        return JsonResponse({'message': 'Operation success'})
+    return JsonResponse({'message': 'Operation failed'}, status=400)
+
+def VIT_super_proceed_userdelorg(request,user_form, organization_form, next_page):
+    """Register a new user for POST user_signup"""
+    # save user to db
+    response = VIT_super_del_userorg(request,user_form, organization_form, next_page)
+    return response
+
+
+def VIT_addpermission(useremail,permissionname):
+    try:
+        user=users.models.User.objects.get(email=useremail)
+        if not user.has_perm('users.'+permissionname):
+            content_type = ContentType.objects.get_for_model(users.models.User)
+            permission = Permission.objects.get(
+            codename=str(permissionname),
+            content_type=content_type,
+)
+            user.user_permissions.add(permission)
+            user=users.models.User.objects.get(email=useremail)
+            if user.has_perm('users.'+permissionname):
+                return 'OK'
+            else:
+                return 'Error'
+        return 'OK'
+    except:
+        return "Error"
+    
+def VIT_delpermission(useremail,permissionname):
+    try:
+        user=users.models.User.objects.get(email=useremail)
+        if user.has_perm('users.'+permissionname):
+            content_type = ContentType.objects.get_for_model(users.models.User)
+            permission = Permission.objects.get(
+            codename=str(permissionname),
+            content_type=content_type,
+)
+            user.user_permissions.remove(permission)
+            user=users.models.User.objects.get(email=useremail)
+            if not user.has_perm('users.'+permissionname):
+                return 'OK'
+            else:
+                return 'Error'
+        return 'OK'
+    except:
+        return "Error"
+    
+def VIT_addpermissionall(useremail):
+    try:
+        permissions = [item[0] for item in users.models.User._meta.permissions]
+        user=users.models.User.objects.get(email=useremail)
+        content_type = ContentType.objects.get_for_model(users.models.User)
+        for i in permissions:
+            if not user.has_perm('users.'+i):
+                permission = Permission.objects.get(
+                    codename=str(i),
+                    content_type=content_type,
+)
+                user.user_permissions.add(permission)
+                user=users.models.User.objects.get(email=useremail)
+                if user.has_perm('users.'+i):
+                    print(i+'----OK')
+                else:
+                    print(i+'----Error')
+        print('success')
+    except:
+        return "Error"

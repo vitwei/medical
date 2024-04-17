@@ -53,6 +53,7 @@ from tasks.serializers import (
 )
 from webhooks.models import WebhookAction
 from webhooks.utils import api_webhook, api_webhook_for_delete, emit_webhooks_for_instance
+from core.permissions import ProjectPermission,ProjectListPermission,ProjectTaskListPermission
 
 logger = logging.getLogger(__name__)
 
@@ -136,6 +137,7 @@ class ProjectFilterSet(FilterSet):
     ),
 )
 class ProjectListAPI(generics.ListCreateAPIView):
+    permission_classes  = [ProjectListPermission]
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     serializer_class = ProjectSerializer
     filter_backends = [filters.OrderingFilter, DjangoFilterBackend]
@@ -207,7 +209,7 @@ class ProjectListAPI(generics.ListCreateAPIView):
     ),
 )
 class ProjectAPI(generics.RetrieveUpdateDestroyAPIView):
-
+    permission_classes=[ProjectPermission]
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     queryset = Project.objects.with_counts()
     permission_required = ViewClassPermission(
@@ -516,7 +518,7 @@ class ProjectReimportAPI(generics.RetrieveAPIView):
     ),
 )
 class ProjectTaskListAPI(GetParentObjectMixin, generics.ListCreateAPIView, generics.DestroyAPIView):
-
+    permission_classes=[ProjectTaskListPermission]
     parser_classes = (JSONParser, FormParser)
     queryset = Task.objects.all()
     parent_queryset = Project.objects.all()

@@ -11,7 +11,7 @@ from urllib.parse import unquote, urlparse
 import drf_yasg.openapi as openapi
 from core.decorators import override_report_only_csp
 from core.feature_flags import flag_set
-from core.permissions import ViewClassPermission, all_permissions
+from core.permissions import ViewClassPermission, all_permissions,ProjectimportPermission
 from core.redis import start_job_async_or_sync
 from core.utils.common import retry_database_locked, timeit
 from core.utils.exceptions import LabelStudioValidationErrorSentryIgnored
@@ -174,6 +174,7 @@ task_create_response_scheme = {
 )
 # Import
 class ImportAPI(generics.CreateAPIView):
+    permission_classes=[ProjectimportPermission]
     permission_required = all_permissions.projects_change
     parser_classes = (JSONParser, MultiPartParser, FormParser)
     serializer_class = ImportApiSerializer
