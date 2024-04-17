@@ -35,8 +35,8 @@ export const EmptyProjectsList = ({ openModal }) => {
   return (
     <Block name="empty-projects-page">
       <Elem name="heidi" tag="img" src={absoluteURL("/static/images/opossum_looking.png")} />
-      <Elem name="header" tag="h1">Heidi doesn’t see any projects here</Elem>
-      <p>Create one and start labeling your data</p>
+      <Elem name="header" tag="h1">没有发现任何项目</Elem>
+      <p>创建一个项目开始标注你的数据吧</p>
       <Elem name="action" tag={Button} onClick={openModal} look="primary">创建项目</Elem>
     </Block>
   );
