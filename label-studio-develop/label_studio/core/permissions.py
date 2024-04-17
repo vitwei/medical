@@ -3,6 +3,7 @@
 import logging   # noqa: I001
 from typing import Optional
 
+from rest_framework.permissions import BasePermission
 from pydantic import BaseModel
 
 import rules
