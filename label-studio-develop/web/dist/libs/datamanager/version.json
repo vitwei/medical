@@ -1,0 +1,6 @@
+{
+  "message": "fix: LEAP-849: LEAP-933: Security vulnerability fixes",
+  "commit": "f0086f25c287f6efc5e27acd87bb0587f0316a3f",
+  "date": "2024-04-09T17:49:03.000Z",
+  "branch": "fb-leap-849"
+}
