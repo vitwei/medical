@@ -51,8 +51,7 @@ RUN set -eux \
      --option APT::AutoRemove::SuggestsImportant=false && rm -rf /var/lib/apt/lists/* /tmp/*
 
 RUN --mount=type=cache,target=$PIP_CACHE_DIR,uid=1001,gid=0 \
-    pip3 install --upgrade pip setuptools && pip3 install poetry uwsgi uwsgitop
-    pip3 install ipython
+    pip3 install --upgrade pip setuptools && pip3 install poetry uwsgi uwsgitop ipython
 
 # incapsulate nginx install & configure to a single layer
 RUN set -eux; \
