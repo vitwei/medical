@@ -5,7 +5,7 @@ import logging
 import drf_yasg.openapi as openapi
 from core.feature_flags import flag_set
 from core.mixins import GetParentObjectMixin
-from core.permissions import ViewClassPermission, all_permissions,annotationsPermission,annotationlistPermission,TaskPermission,TaskListtPermission,censorPermission
+from core.permissions import ViewClassPermission, all_permissions,annotationsPermission,annotationlistPermission,TaskPermission,TaskListPermission,censorPermission
 from core.utils.common import DjangoFilterDescriptionInspector
 from core.utils.params import bool_from_request
 from data_manager.api import TaskListAPI as DMTaskListAPI
@@ -75,7 +75,7 @@ logger = logging.getLogger(__name__)
     ),
 )
 class TaskListAPI(DMTaskListAPI):
-    permission_classes=[TaskListtPermission]
+    permission_classes=[TaskListPermission]
     serializer_class = TaskSerializer
     permission_required = ViewClassPermission(
         GET=all_permissions.tasks_view,

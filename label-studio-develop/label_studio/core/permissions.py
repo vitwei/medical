@@ -200,8 +200,8 @@ class mlPermission(BasePermission):
                 return True
         return False
 
-class TaskListtPermission(BasePermission):
-    message = "用户无权限 TaskListtPermission" 
+class TaskListPermission(BasePermission):
+    message = "用户无权限 TaskListPermission" 
     def has_permission(self, request, view):
         if request.user.is_superuser:
             return True
