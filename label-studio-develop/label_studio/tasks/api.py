@@ -5,7 +5,7 @@ import logging
 import drf_yasg.openapi as openapi
 from core.feature_flags import flag_set
 from core.mixins import GetParentObjectMixin
-from core.permissions import ViewClassPermission, all_permissions,annotationsPermission,annotationlistPermission,TaskPermission,TaskListtPermission
+from core.permissions import ViewClassPermission, all_permissions,annotationsPermission,annotationlistPermission,TaskPermission,TaskListtPermission,censorPermission
 from core.utils.common import DjangoFilterDescriptionInspector
 from core.utils.params import bool_from_request
 from data_manager.api import TaskListAPI as DMTaskListAPI
@@ -604,3 +604,55 @@ class AnnotationConvertAPI(generics.RetrieveAPIView):
         emit_webhooks_for_instance(organization, project, WebhookAction.ANNOTATIONS_DELETED, [pk])
         data = AnnotationDraftSerializer(instance=draft).data
         return Response(status=201, data=data)
+
+class AnnotationCensorAPI(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes=[censorPermission]
+    parser_classes = (JSONParser, FormParser, MultiPartParser)
+    permission_required = ViewClassPermission(
+        GET=all_permissions.annotations_view,
+        PUT=all_permissions.annotations_change,
+        PATCH=all_permissions.annotations_change,
+        DELETE=all_permissions.annotations_delete,
+    )
+
+    serializer_class = AnnotationSerializer
+    queryset = Annotation.objects.all()
+
+    def perform_destroy(self, annotation):
+        annotation.delete()
+
+    def update(self, request, *args, **kwargs):
+        # save user history with annotator_id, time & annotation result
+        annotation = self.get_object()
+        # use updated instead of save to avoid duplicated signals
+        Annotation.objects.filter(id=annotation.id).update(updated_by=request.user)
+
+        task = annotation.task
+        if self.request.data.get('ground_truth'):
+            task.ensure_unique_groundtruth(annotation_id=annotation.id)
+        task.update_is_labeled()
+        task.save()  # refresh task metrics
+
+        result = super(AnnotationCensorAPI, self).update(request, *args, **kwargs)
+
+        task.update_is_labeled()
+        task.save(update_fields=['updated_at'])  # refresh task metrics
+        return result
+
+    def get(self, request, *args, **kwargs):
+        return super(AnnotationCensorAPI, self).get(request, *args, **kwargs)
+
+    @api_webhook(WebhookAction.ANNOTATION_UPDATED)
+    @swagger_auto_schema(auto_schema=None)
+    def put(self, request, *args, **kwargs):
+        return super(AnnotationCensorAPI, self).put(request, *args, **kwargs)
+
+    @api_webhook(WebhookAction.ANNOTATION_UPDATED)
+    def patch(self, request, *args, **kwargs):
+        return super(AnnotationCensorAPI, self).patch(request, *args, **kwargs)
+
+    @api_webhook_for_delete(WebhookAction.ANNOTATIONS_DELETED)
+    def delete(self, request, *args, **kwargs):
+        return super(AnnotationCensorAPI, self).delete(request, *args, **kwargs)
+
+

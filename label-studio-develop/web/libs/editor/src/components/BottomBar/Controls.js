@@ -35,13 +35,13 @@ export const Controls = controlsInjector(observer(({ store, history, annotation 
   const isReview = store.hasInterface('review');
   const isNotQuickView = store.hasInterface('topbar:prevnext');
   const historySelected = isDefined(store.annotationStore.selectedHistory);
-  const { userGenerate, sentUserGenerate,sentCensortruth, versions, results, editable: annotationEditable } = annotation;
+  const { userGenerate, sentUserGenerate,censor_truth, versions, results, editable: annotationEditable } = annotation;
   const buttons = [];
-
   const [isInProgress, setIsInProgress] = useState(false);
 
   const disabled = !annotationEditable || store.isSubmitting || historySelected || isInProgress;
   const submitDisabled = store.hasInterface('annotations:deny-empty') && results.length === 0;
+  
   
   const buttonHandler = useCallback(async (e, callback, tooltipMessage) => {
     const { addedCommentThisSession, currentComment, commentFormSubmit } = store.commentStore;
@@ -92,6 +92,39 @@ export const Controls = controlsInjector(observer(({ store, history, annotation 
     );
   }, [disabled, store]);
 
+  const censorButton = useMemo(() => {
+    return (
+      <ButtonTooltip key="censorButton" title="censorButton Tooltip">
+        <Button aria-label="censorButton" disabled={disabled} onClick={
+          async () => {
+            const selected = store.annotationStore?.selected;
+            selected?.submissionInProgress();
+            await store.commentStore.commentFormSubmit();
+            store.censorAnnotation();
+
+        }}>
+          设置为审查合格
+        </Button>
+      </ButtonTooltip>
+    );
+  }, [disabled]);
+
+  const censorNotButton = useMemo(() => {
+    return (
+      <ButtonTooltip key="censorButton" title="censorButton Tooltip">
+        <Button aria-label="censorButton" disabled={disabled} onClick={
+          async () => {
+            const selected = store.annotationStore?.selected;
+            selected?.submissionInProgress();
+            await store.commentStore.commentFormSubmit();
+            store.censorNotAnnotation();
+        }}>
+          设置为审查不合格
+        </Button>
+      </ButtonTooltip>
+    );
+  }, [disabled]);
+
   if (isReview) {
     buttons.push(RejectButton);
 
@@ -127,6 +160,8 @@ export const Controls = controlsInjector(observer(({ store, history, annotation 
       </ButtonTooltip>,
     );
   } else {
+    buttons.push(censorNotButton);
+    buttons.push(censorButton);
     if (store.hasInterface('skip')) {
       buttons.push(
         <ButtonTooltip key="skip" title="Cancel (skip) task: [ Ctrl+Space ]">
@@ -301,46 +336,6 @@ export const Controls = controlsInjector(observer(({ store, history, annotation 
         buttons.push(button);
       }  
     }
-  }
-  if (sentCensortruth) {
-    const censorButton = useMemo(() => {
-      return (
-        <ButtonTooltip key="censorButton" title="censorButton Tooltip">
-          <Button aria-label="censorButton" disabled={disabled} onClick={
-            async () => {
-              const selected = store.annotationStore?.selected;
-              selected?.submissionInProgress();
-              await store.commentStore.commentFormSubmit();
-              store.updateAnnotation();
-          }
-          }>
-            点击取消审查合格
-          </Button>
-        </ButtonTooltip>
-      );
-    }, [disabled]);
-    // 将新按钮添加到按钮数组中
-  buttons.push(censorButton);
-  }
-  else {
-    const censorButton = useMemo(() => {
-      return (
-        <ButtonTooltip key="censorButton" title="censorButton Tooltip">
-          <Button aria-label="censorButton" disabled={disabled} onClick={
-            async () => {
-              const selected = store.annotationStore?.selected;
-              selected?.submissionInProgress();
-              await store.commentStore.commentFormSubmit();
-              store.censorAnnotation();
-          }
-          }>
-            点击使其审查合格
-          </Button>
-        </ButtonTooltip>
-      );
-    }, [disabled]);
-    // 将新按钮添加到按钮数组中
-  buttons.push(censorButton);
   }
 
 

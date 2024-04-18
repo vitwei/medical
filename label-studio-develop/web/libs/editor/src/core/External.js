@@ -19,6 +19,10 @@ function onDeleteAnnotation() {}
  */
 function onCensorAnnotation() {}
 /**
+ * Callback on censor annotation
+ */
+function onCensorNotAnnotation() {}
+/**
  * Callback on skip task
  */
 function onSkipTask() {}
@@ -92,6 +96,7 @@ export default {
   onTaskLoad,
   onUpdateAnnotation,
   onCensorAnnotation,
+  onCensorNotAnnotation,
   onSelectAnnotation,
   onAcceptAnnotation,
   onRejectAnnotation,

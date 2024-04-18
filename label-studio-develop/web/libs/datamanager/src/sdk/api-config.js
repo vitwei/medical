@@ -80,6 +80,12 @@ export const APIConfig = {
       method: "patch",
     },
 
+    /** Censor annotation */
+    CensorAnnotation: {
+      path: "/../annotations/:annotationID/censor",
+      method: "patch",
+    },
+
     /** Delete annotation */
     deleteAnnotation: {
       path: "/../annotations/:annotationID",

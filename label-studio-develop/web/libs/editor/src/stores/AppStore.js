@@ -578,14 +578,11 @@ export default types
 
     function censorAnnotation(extraData) {
       if (self.isSubmitting) return;
-      console.log('Censoring censorAnnotation with extra data:', extraData);
-
       const entity = self.annotationStore.selected;
       
       entity.beforeSend();
 
       if (!entity.validate()) return;
-
       entity.sendCensortruth();
 
       handleSubmittingFlag(async () => {
@@ -594,7 +591,25 @@ export default types
       });
 
       entity.dropDraft();
-      !entity.sentCensortruth && entity.sendCensortruth();
+      !entity.censor_truth && entity.sendCensortruth();
+    }
+
+    function censorNotAnnotation(extraData) {
+      if (self.isSubmitting) return;
+      const entity = self.annotationStore.selected;
+      
+      entity.beforeSend();
+
+      if (!entity.validate()) return;
+      entity.sendCensortruth();
+
+      handleSubmittingFlag(async () => {
+        await getEnv(self).events.invoke('censorNotAnnotation', self, entity, extraData);
+        self.incrementQueuePosition();
+      });
+
+      entity.dropDraft();
+      !entity.censor_truth && entity.sendCensortruth();
     }
 
     function skipTask(extraData) {
@@ -900,6 +915,7 @@ export default types
       submitAnnotation,
       updateAnnotation,
       censorAnnotation,
+      censorNotAnnotation,
       acceptAnnotation,
       rejectAnnotation,
       presignUrlForProject,

@@ -272,3 +272,14 @@ class annotationsPermission(BasePermission):
         if obj.completed_by==request.user or request.user.has_perm('users.tasks_annotations_super'):
             return True
         return False
+
+class censorPermission(BasePermission):
+    message = "用户无权限" 
+    def has_permission(self, request, view):
+        if request.user.is_superuser:
+            return True
+        if request.method == 'PATCH':
+            if request.user.has_perm('users.tasks_annotations_super'):
+                return True
+        return False
+    

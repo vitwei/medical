@@ -47,6 +47,8 @@ function configureApplication(params) {
   const ouCB = params.updateAnnotation || params.onUpdateAnnotation;
   const odCB = params.deleteAnnotation || params.onDeleteAnnotation;
   const ocCB = params.censorAnnotation || params.onCensorAnnotation;
+  const ocNCB = params.censorNotAnnotation || params.onCensorNotAnnotation;
+
 
   const options = {
     // communication with the server
@@ -64,6 +66,7 @@ function configureApplication(params) {
     onUpdateAnnotation: params.onUpdateAnnotation ? ouCB : External.onUpdateAnnotation,
     onDeleteAnnotation: params.onDeleteAnnotation ? odCB : External.onDeleteAnnotation,
     onCensorAnnotation: params.onCensorAnnotation ? ocCB : External.onCensorAnnotation,
+    onCensorNotAnnotation: params.onCensorNotAnnotation ? ocNCB : External.onNotCensorAnnotation,
     onSkipTask: params.onSkipTask ? params.onSkipTask : External.onSkipTask,
     onUnskipTask: params.onUnskipTask ? params.onUnskipTask : External.onUnskipTask,
     onSubmitDraft: params.onSubmitDraft,

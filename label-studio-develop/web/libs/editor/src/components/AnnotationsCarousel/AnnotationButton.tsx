@@ -91,15 +91,15 @@ export const AnnotationButton = observer(({ entity, capabilities, annotationStor
     const deleteAnnotation = useCallback(() => {
       clickHandler();
       confirm({
-        title: 'Delete annotation?',
+        title: '要删除标注吗?',
         body: (
           <>
-            This will <strong>delete all existing regions</strong>. Are you sure you want to delete them?<br/>
-            This action cannot be undone.
+            这将会 <strong>删除所有标注区域</strong>. 你确定想要删除它吗?<br/>
+            此行为不可恢复.
           </>
         ),
         buttonLook: 'destructive',
-        okText: 'Delete',
+        okText: '删除',
         onOk: () => {
           entity.list.deleteAnnotation(entity);
         },

@@ -150,6 +150,7 @@ function configureApplication(params) {
     onSubmitAnnotation: params.onSubmitAnnotation ? params.onSubmitAnnotation : External.onSubmitAnnotation,
     onUpdateAnnotation: params.onUpdateAnnotation ? params.onUpdateAnnotation : External.onUpdateAnnotation,
     onCensorAnnotation: params.onCensorAnnotation ? params.onCensorAnnotation : External.onCensorAnnotation,
+    onCensorNotAnnotation: params.onCensorNotAnnotation ? params.onCensorNotAnnotation : External.onCensorNotAnnotation,
     onDeleteAnnotation: params.onDeleteAnnotation ? params.onDeleteAnnotation : External.onDeleteAnnotation,
     onSkipTask: params.onSkipTask ? params.onSkipTask : External.onSkipTask,
     onUnskipTask: params.onUnskipTask ? params.onUnskipTask : External.onUnskipTask,

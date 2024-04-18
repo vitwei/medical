@@ -185,6 +185,7 @@ export class LSFWrapper {
       onUpdateAnnotation: this.onUpdateAnnotation,
       onDeleteAnnotation: this.onDeleteAnnotation,
       onCensorAnnotation: this.onCensorAnnotation,
+      onCensorNotAnnotation: this.onCensorNotAnnotation,
       onSkipTask: this.onSkipTask,
       onUnskipTask: this.onUnskipTask,
       onGroundTruth: this.onGroundTruth,
@@ -631,13 +632,11 @@ export class LSFWrapper {
     const { task } = this;
     const serializedAnnotation = this.CensorData(annotation);
     const exitStream = this.shouldExitStream();
-    console.log('Censoring onCensorAnnotation with extra data:', extraData);
     Object.assign(serializedAnnotation, extraData);
-    console.log('Censoring onCensorAnnotation with serializedAnnotation:', serializedAnnotation);
 
     const result = await this.withinLoadingState(async () => {
       return this.datamanager.apiCall(
-        "updateAnnotation",
+        "CensorAnnotation",
         {
           taskID: task.id,
           annotationID: annotation.pk,
@@ -650,8 +649,8 @@ export class LSFWrapper {
 
     const status = result?.$meta?.status;
 
-    if (status === 200 || status === 201) this.datamanager.invoke("toast", { message: "Annotation updated successfully", type: "info" });
-    else if (status !== undefined) this.datamanager.invoke("toast", { message: "There was an error updating your Annotation", type: "error" });
+    if (status === 200 || status === 201) this.datamanager.invoke("toast", { message: "审核状态已设置为合格", type: "info" });
+    else if (status !== undefined) this.datamanager.invoke("toast", { message: "审核状态更新失败", type: "error" });
 
     this.datamanager.invoke("updateAnnotation", ls, annotation, result);
 
@@ -667,6 +666,44 @@ export class LSFWrapper {
     }
   };
 
+   /** @private */
+   onCensorNotAnnotation = async (ls, annotation, extraData) => {
+    const { task } = this;
+    const serializedAnnotation = this.CensorNotData(annotation);
+    const exitStream = this.shouldExitStream();
+    Object.assign(serializedAnnotation, extraData);
+
+    const result = await this.withinLoadingState(async () => {
+      return this.datamanager.apiCall(
+        "CensorAnnotation",
+        {
+          taskID: task.id,
+          annotationID: annotation.pk,
+        },
+        {
+          body: serializedAnnotation,
+        },
+      );
+    });
+
+    const status = result?.$meta?.status;
+
+    if (status === 200 || status === 201) this.datamanager.invoke("toast", { message: "审核状态已设置为不合格", type: "info" });
+    else if (status !== undefined) this.datamanager.invoke("toast", { message: "审核状态更新失败", type: "error" });
+
+    this.datamanager.invoke("updateAnnotation", ls, annotation, result);
+
+    if (exitStream) return  this.exitStream();
+
+    const isRejectedQueue = isDefined(task.default_selected_annotation);
+
+    if (isRejectedQueue) {
+      // load next task if that one was updated task from rejected queue
+      await this.loadTask();
+    } else {
+      await this.loadTask(this.task.id, annotation.pk, true);
+    }
+  };
 
 
   deleteDraft = async (id) => {
@@ -940,6 +977,22 @@ export class LSFWrapper {
 
     const result = {
       VIT_is_censored : true,
+    };
+
+    if (includeId && userGenerate) {
+      result.id = parseInt(annotation.pk);
+    }
+
+    return result;
+  }
+
+  /** @private */
+  CensorNotData(annotation,{ includeId, draft } = {}) {
+    const userGenerate =
+      !annotation.userGenerate || annotation.sentUserGenerate;
+
+    const result = {
+      VIT_is_censored : false,
     };
 
     if (includeId && userGenerate) {
