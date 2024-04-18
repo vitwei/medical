@@ -216,7 +216,7 @@ def VIT_addpermission(useremail,permissionname):
                 return 'Error'
         return 'OK'
     except:
-        return "Error"
+        return "Error please check permissionname"
     
 def VIT_delpermission(useremail,permissionname):
     try:
@@ -235,8 +235,15 @@ def VIT_delpermission(useremail,permissionname):
                 return 'Error'
         return 'OK'
     except:
-        return "Error"
+        return "Error please check permissionname"
+
     
+def VIT_delpermissionall(useremail):
+    user=users.models.User.objects.get(email=useremail)
+    user.user_permissions.clear()
+    user.save()
+    return 'OK'
+
 def VIT_addpermissionall(useremail):
     try:
         permissions = [item[0] for item in users.models.User._meta.permissions]
@@ -247,7 +254,66 @@ def VIT_addpermissionall(useremail):
                 permission = Permission.objects.get(
                     codename=str(i),
                     content_type=content_type,
-)
+                                                    )
+                user.user_permissions.add(permission)
+                user=users.models.User.objects.get(email=useremail)
+                if user.has_perm('users.'+i):
+                    print(i+'----OK')
+                else:
+                    print(i+'----Error')
+        print('success')
+    except:
+        return "Error"
+
+def VIT_L1permission(useremail):
+    permissionlist=[
+    'projects_projectlist_get',
+    'projects_project_get',
+    'data_manager_view_get',
+    'data_manager_action_get',
+    'tasks_taskslist_get',
+    'tasks_get'
+    ]
+    try:
+        content_type = ContentType.objects.get_for_model(users.models.User)
+        user=users.models.User.objects.get(email=useremail)
+        for i in permissionlist:
+            if not user.has_perm('users.'+i):
+                permission = Permission.objects.get(
+                    codename=str(i),
+                    content_type=content_type,
+                    )
+                user.user_permissions.add(permission)
+                user=users.models.User.objects.get(email=useremail)
+                if user.has_perm('users.'+i):
+                    print(i+'----OK')
+                else:
+                    print(i+'----Error')
+        print('success')
+    except:
+        return "Error"
+
+def VIT_L2permission(useremail):
+    permissionlist=[
+    'projects_projectlist_get',
+    'projects_project_get',
+    'data_manager_view_get',
+    'data_manager_action_get',
+    'tasks_taskslist_get',
+    'tasks_get',
+    'tasks_annotations_put',
+    'tasks_annotations_patch',
+    'tasks_annotationlist_post',
+    ]
+    try:
+        content_type = ContentType.objects.get_for_model(users.models.User)
+        user=users.models.User.objects.get(email=useremail)
+        for i in permissionlist:
+            if not user.has_perm('users.'+i):
+                permission = Permission.objects.get(
+                    codename=str(i),
+                    content_type=content_type,
+                    )
                 user.user_permissions.add(permission)
                 user=users.models.User.objects.get(email=useremail)
                 if user.has_perm('users.'+i):

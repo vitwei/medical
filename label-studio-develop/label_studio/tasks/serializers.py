@@ -97,12 +97,12 @@ class AnnotationSerializer(FlexFieldsModelSerializer):
     
     def get_VIT_censor_by(self, annotation):
         user = self.context['request'].user
-        name = user.first_name
-        if len(user.last_name):
-            name = name + ' ' + user.last_name
-
-        name += f' {user.email}, {user.id}'
-        return name
+        if user.is_superuser or user.has_perm('users.tasks_annotations_super'):
+            name = user.first_name
+            if len(user.last_name):
+                name = name + ' ' + user.last_name
+            name += f' {user.email}, {user.id}'
+            return name
 
     class Meta:
         model = Annotation
