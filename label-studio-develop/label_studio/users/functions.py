@@ -261,9 +261,9 @@ def VIT_addpermissionall(useremail):
                     print(i+'----OK')
                 else:
                     print(i+'----Error')
-        print('success')
+        print('success VIT_addpermissionall')
     except:
-        return "Error"
+        return "Error VIT_addpermissionall"
 
 def VIT_L1permission(useremail):
     permissionlist=[
@@ -323,3 +323,44 @@ def VIT_L2permission(useremail):
         print('success')
     except:
         return "Error"
+
+def VIT_L3permission(useremail):
+    permissionlist=[
+    'projects_projectlist_get',
+    'projects_project_get',
+    'data_manager_view_get',
+    'data_manager_action_get',
+    'tasks_taskslist_get',
+    'tasks_get',
+    'tasks_annotations_put',
+    'tasks_annotations_patch',
+    'tasks_annotationlist_post',
+    'tasks_annotations_super',
+    ]
+    try:
+        content_type = ContentType.objects.get_for_model(users.models.User)
+        user=users.models.User.objects.get(email=useremail)
+        for i in permissionlist:
+            if not user.has_perm('users.'+i):
+                permission = Permission.objects.get(
+                    codename=str(i),
+                    content_type=content_type,
+                    )
+                user.user_permissions.add(permission)
+                user=users.models.User.objects.get(email=useremail)
+                if user.has_perm('users.'+i):
+                    print(i+'----OK')
+                else:
+                    print(i+'----Error')
+        print('success')
+    except:
+        return "Error"
+
+def VIT_L4permission(useremail):
+    try:
+        VIT_addpermissionall(useremail)
+        return 'success VIT_L4permission'
+    except:
+        return "Error VIT_L4permission"
+    
+

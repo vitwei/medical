@@ -180,7 +180,7 @@ class dataviewPermission(BasePermission):
                 return True
         return False
     def has_object_permission(self, request, view, obj):
-        if obj.completed_by==request.user or request.user.has_perm('users.data_manager_view_super'):
+        if obj.user==request.user or request.user.has_perm('users.data_manager_view_super'):
             return True
         return False
 

@@ -103,6 +103,8 @@ class AnnotationSerializer(FlexFieldsModelSerializer):
                 name = name + ' ' + user.last_name
             name += f' {user.email}, {user.id}'
             return name
+        else:
+            return ''
 
     class Meta:
         model = Annotation
