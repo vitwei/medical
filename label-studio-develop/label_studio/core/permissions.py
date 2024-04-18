@@ -70,7 +70,7 @@ for _, permission_name in all_permissions:
     make_perm(permission_name, rules.is_authenticated)
 
 class ProjectListPermission(BasePermission):
-    message = "用户无权限" 
+    message = "用户无权限 ProjectListPermission" 
     def has_permission(self, request, view):
         if request.user.is_superuser:
             return True
@@ -84,7 +84,7 @@ class ProjectListPermission(BasePermission):
         return False
     
 class ProjectPermission(BasePermission):
-    message = "用户无权限" 
+    message = "用户无权限 ProjectPermission" 
     def has_permission(self, request, view):
         if request.user.is_superuser:
             return True
@@ -107,7 +107,7 @@ class ProjectPermission(BasePermission):
         return False
     
 class ProjectTaskListPermission(BasePermission):
-    message = "用户无权限" 
+    message = "用户无权限 ProjectTaskListPermission" 
     def has_permission(self, request, view):
         if request.user.is_superuser:
             return True
@@ -124,7 +124,7 @@ class ProjectTaskListPermission(BasePermission):
         return False    
     
 class ProjectimportPermission(BasePermission):
-    message = "用户无权限" 
+    message = "用户无权限 ProjectimportPermission" 
     def has_permission(self, request, view):
         if request.user.is_superuser:
             return True
@@ -134,7 +134,7 @@ class ProjectimportPermission(BasePermission):
         return False
     
 class ProjectexportPermission(BasePermission):
-    message = "用户无权限" 
+    message = "用户无权限 ProjectexportPermission" 
     def has_permission(self, request, view):
         if request.user.is_superuser:
             return True
@@ -145,7 +145,7 @@ class ProjectexportPermission(BasePermission):
         return False
 
 class dataactionPermission(BasePermission):
-    message = "用户无权限" 
+    message = "用户无权限 dataactionPermission" 
     def has_permission(self, request, view):
         if request.user.is_superuser:
             return True
@@ -160,7 +160,7 @@ class dataactionPermission(BasePermission):
         return False
 
 class dataviewPermission(BasePermission):
-    message = "用户无权限" 
+    message = "用户无权限 dataviewPermission" 
     def has_permission(self, request, view):
         if request.user.is_superuser:
             return True
@@ -185,7 +185,7 @@ class dataviewPermission(BasePermission):
         return False
 
 class mlPermission(BasePermission):
-    message = "用户无权限" 
+    message = "用户无权限 mlPermission" 
     def has_permission(self, request, view):
         if request.user.is_superuser:
             return True
@@ -201,7 +201,7 @@ class mlPermission(BasePermission):
         return False
 
 class TaskListtPermission(BasePermission):
-    message = "用户无权限" 
+    message = "用户无权限 TaskListtPermission" 
     def has_permission(self, request, view):
         if request.user.is_superuser:
             return True
@@ -215,7 +215,7 @@ class TaskListtPermission(BasePermission):
         return False
 
 class TaskPermission(BasePermission):
-    message = "用户无权限" 
+    message = "用户无权限 TaskPermission" 
     def has_permission(self, request, view):
         if request.user.is_superuser:
             return True
@@ -235,7 +235,7 @@ class TaskPermission(BasePermission):
         return False
 
 class annotationlistPermission(BasePermission):
-    message = "用户无权限" 
+    message = "用户无权限 annotationlistPermission" 
     def has_permission(self, request, view):
         if request.user.is_superuser:
             return True
@@ -249,7 +249,7 @@ class annotationlistPermission(BasePermission):
         return False    
 
 class annotationsPermission(BasePermission):
-    message = "用户无权限" 
+    message = "用户无权限 annotationsPermission" 
     def has_permission(self, request, view):
         if request.user.is_superuser:
             return True
@@ -274,7 +274,7 @@ class annotationsPermission(BasePermission):
         return False
 
 class censorPermission(BasePermission):
-    message = "用户无权限" 
+    message = "用户无权限 censorPermission" 
     def has_permission(self, request, view):
         if request.user.is_superuser:
             return True
