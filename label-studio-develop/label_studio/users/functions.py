@@ -303,7 +303,7 @@ def VIT_L2permission(useremail):
     'tasks_get',
     'tasks_annotations_put',
     'tasks_annotations_patch',
-    'tasks_annotationlist_post',
+    'tasks_annotationlist_post'
     ]
     try:
         content_type = ContentType.objects.get_for_model(users.models.User)
@@ -332,10 +332,15 @@ def VIT_L3permission(useremail):
     'data_manager_action_get',
     'tasks_taskslist_get',
     'tasks_get',
+    'data_manager_view_post',
+    'data_manager_view_patch',
+    'data_manager_view_put',
+    'data_manager_view_get',
     'tasks_annotations_put',
     'tasks_annotations_patch',
     'tasks_annotationlist_post',
     'tasks_annotations_super',
+    'data_manager_view_super'
     ]
     try:
         content_type = ContentType.objects.get_for_model(users.models.User)
