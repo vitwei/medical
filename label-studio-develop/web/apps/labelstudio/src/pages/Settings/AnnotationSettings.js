@@ -38,9 +38,9 @@ export const AnnotationSettings = () => {
               <Toggle label="在标注前显示" name="show_instruction" />
             </div>
             <div style={{ color: 'rgba(0,0,0,0.4)' }}>
-              <p>Write instructions to help users complete labeling tasks.</p>
+              <p>编写说明以帮助用户完成标记任务</p>
               <p>
-                The instruction field supports HTML markup and it allows use of
+                指令字段支持HTML标记并允许使用
                 images, iframes (pdf).
               </p>
             </div>
@@ -63,7 +63,7 @@ export const AnnotationSettings = () => {
                 label="使用预测器预先标注任务"
                 description={
                   <span>
-                    Enable and select which set of predictions to use for prelabeling.
+                    启用并选择要用于预标记的预测集
                     Predictions will be pre-loaded in {" "}
                     <a
                       style={{ color: "rgb(105 129 185)" }}

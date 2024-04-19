@@ -29,20 +29,20 @@ const CustomBackendForm = ({action, backend, project, onSubmit}) => {
       <Input type="hidden" name="project" value={project.id}/>
 
       <Form.Row columnCount={1}>
-        <Input name="title" label="Name" placeholder="Enter a name" required/>
+        <Input name="title" label="名称" placeholder="输入名称" required/>
       </Form.Row>
 
       <Form.Row columnCount={1}>
-        <Input name="url" label="Backend URL" required/>
+        <Input name="url" label="后端URL" required/>
       </Form.Row>
 
       <Form.Row columnCount={2}>
         <Select
           name="auth_method"
-          label="Select authentication method"
+          label="选择身份验证方法"
           options={[
-            {label: 'No Authentication', value: 'NONE'},
-            {label: 'Basic Authentication', value: 'BASIC_AUTH'},
+            {label: '无', value: 'NONE'},
+            {label: '基础', value: 'BASIC_AUTH'},
           ]}
           onChange={(e) => {
             setAuthMethod(e.target.value);
@@ -65,7 +65,7 @@ const CustomBackendForm = ({action, backend, project, onSubmit}) => {
       <Form.Row columnCount={1}>
         <TextArea
           name="extra_params"
-          label="Any extra params to pass during model connection"
+          label="模型连接期间要传递的任何额外参数"
           style={{minHeight: 120}}
         />
       </Form.Row>
@@ -73,8 +73,8 @@ const CustomBackendForm = ({action, backend, project, onSubmit}) => {
       <Form.Row columnCount={1}>
         <Toggle
           name="is_interactive"
-          label="Interactive preannotations"
-          description="If enabled some labeling tools will send requests to the ML Backend interactively during the annotation process."
+          label="交互式"
+          description="如果启用,某些标记工具将在注释过程中以交互方式向ML后端发送请求"
         />
       </Form.Row>
 

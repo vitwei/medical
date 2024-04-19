@@ -102,11 +102,11 @@ export const MachineLearningSettings = () => {
         {loaded && backends.length === 0 && (
           <EmptyState
             icon={<IconEmptyPredictions />}
-            title="Let’s connect your first model"
-            description="Connect a machine learning model to generate predictions. These predictions can be compared side by side, used for efficient pre‒labeling and, to aid in active learning, directing users to the most impactful labeling tasks."
+            title="让我们连接您的第一个模型"
+            description="连接机器学习模型以生成预测。这些预测可以并排比较，用于有效的预标记，并有助于主动学习，引导用户完成最具影响力的标记任务"
             action={(
               <Button primary onClick={() => showMLFormModal()}>
-                Connect Model
+                连接到模型
               </Button>
             )}
             footer={(

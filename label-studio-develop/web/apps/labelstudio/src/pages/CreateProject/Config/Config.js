@@ -86,9 +86,9 @@ const ConfigureControl = ({ control, template }) => {
     <div className={configClass.elem("labels")}>
       <form className={configClass.elem("add-labels")} action="">
         <h4>{tagname === "Choices" ? "Add choices" : "添加新标签名字"}</h4>
-        <span>Use new line as a separator to add multiple labels</span>
+        <span>使用换行作为分隔符添加多个标签</span>
         <textarea name="labels" id="" cols="30" rows="5" ref={refLabels} onKeyPress={onKeyPress}></textarea>
-        <input type="button" value="Add" onClick={onAddLabels} />
+        <input type="button" value="添加" onClick={onAddLabels} />
       </form>
       <div className={configClass.elem("current-labels")}>
         <h3>{tagname === "Choices" ? "Choices" : "Labels"} ({control.children.length})</h3>
@@ -268,13 +268,13 @@ const ConfigureColumns = ({ columns, template }) => {
 
   return (
     <div className={configClass.elem("object")}>
-      <h4>Configure data</h4>
+      <h4>数据配置</h4>
       {template.objects.length > 1 && columns?.length > 0 && columns.length < template.objects.length && (
-        <p className={configClass.elem("object-error")}>This template requires more data then you have for now</p>
+        <p className={configClass.elem("object-error")}>此模板所需的数据比您目前所需的要多</p>
       )}
       {columns?.length === 0 && (
         <p className={configClass.elem("object-error")}>
-          To select which field(s) to label you need to upload the data. Alternatively, you can provide it using Code mode.
+          为了选择要标记的字段，您需要上传数据。或者，您可以使用代码模式提供它
         </p>
       )}
       {template.objects.map(obj => (
