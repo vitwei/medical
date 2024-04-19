@@ -16,9 +16,9 @@ export const DangerZone = () => {
 
   const handleOnClick = (type) => () => {
     confirm({
-      title: "Action confirmation",
-      body: "You're about to delete all things. This action cannot be undone.",
-      okText: "Proceed",
+      title: "选项确认",
+      body: "您即将删除所有内容。此操作无法撤消",
+      okText: "确认执行",
       buttonLook: "destructive",
       onOk: async () => {
         setProcessing(type);
@@ -68,25 +68,25 @@ export const DangerZone = () => {
   }, {
     type: 'reset_cache',
     help:
-      'Reset Cache may help in cases like if you are unable to modify the labeling configuration due ' +
-      'to validation errors concerning existing labels, but you are confident that the labels don\'t exist. You can ' +
-      'use this action to reset the cache and try again.',
+      '如果由于现有标签的验证错误而无法修改标签配置' +
+      '但您确信标签不存在，则重置缓存可能会有所帮助' +
+      '您可以使用此操作重置缓存，然后重试',
     label: `重置缓存`,
   }, {
     type: 'tabs',
-    help: 'If the Data Manager is not loading, dropping all Data Manager tabs can help.',
+    help: '如果数据管理器未加载, 删除所有数据管理器页标签可以帮助你',
     label: `删除所有页签`,
   }, {
     type: 'project',
-    help: 'Deleting a project removes all tasks, annotations, and project data from the database.',
+    help: '删除项目会从数据库中删除所有任务、标注和项目数据',
     label: '删除该项目',
   }], [project]);
 
   return (
     <div style={{ width: 480 }}>
       <Label
-        text="Delete Annotations, Tasks, or Project"
-        description="Perform these actions at your own risk. Actions you take on this page can't be reverted. Make sure your data is backed up."
+        text="删除注释、任务或项目"
+        description="执行这些操作的风险自负。无法恢复您在此页面上执行的操作。确保您的数据已备份"
         style={{ display: 'block', width: 415 }}
       />
 
