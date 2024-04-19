@@ -184,13 +184,13 @@ export const DataView = injector(
                     Try adjusting the filter
                   </>
                 ) : (
-                  "Looks like you have not imported any data yet"
+                  "看起来您尚未导入任何数据"
                 )}
               </Elem>
               {!hasData && (
                 <Elem name="navigation">
                   <ImportButton look="primary" href="./import">
-                    Go to import
+                    快去导入吧
                   </ImportButton>
                 </Elem>
               )}
