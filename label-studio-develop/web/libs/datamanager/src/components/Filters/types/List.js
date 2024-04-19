@@ -34,13 +34,13 @@ export const VariantSelect = observer(({ filter, schema, onChange, multiple, val
 export const ListFilter = [
   {
     key: "contains",
-    label: "contains",
+    label: "包含",
     valueType: "single",
     input: (props) => <VariantSelect {...props} multiple/>,
   },
   {
     key: "not_contains",
-    label: "not contains",
+    label: "不包含",
     valueType: "single",
     input: (props) => <VariantSelect {...props} multiple/>,
   },

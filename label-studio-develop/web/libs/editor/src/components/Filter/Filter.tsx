@@ -102,7 +102,7 @@ export const Filter: FC<FilterInterface> = ({
           type={'text'}
           onClick={addNewFilterListItem}
         >
-          Add {filterList.length ? 'Another Filter' : 'Filter'}
+          添加 {filterList.length ? '额外过滤条件' : '过滤条件'}
         </Button>
       </Block>
     );

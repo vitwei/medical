@@ -19,31 +19,31 @@ const BaseInput = observer((props) => {
 export const StringFilter = [
   {
     key: 'contains',
-    label: 'contains',
+    label: '包含',
     valueType: 'single',
     input: BaseInput,
   },
   {
     key: 'not_contains',
-    label: 'not contains',
+    label: '不包含',
     valueType: 'single',
     input: BaseInput,
   },
   {
     key: 'regex',
-    label: 'regex',
+    label: '正则式',
     valueType: 'single',
     input: BaseInput,
   },
   {
     key: 'equal',
-    label: 'equal',
+    label: '等于',
     valueType: 'single',
     input: BaseInput,
   },
   {
     key: 'not_equal',
-    label: 'not equal',
+    label: '不等于',
     valueType: 'single',
     input: BaseInput,
   },

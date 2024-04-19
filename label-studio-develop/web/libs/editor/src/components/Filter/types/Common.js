@@ -7,8 +7,8 @@ const BaseInput = observer((props) => (
   <FilterDropdown
     onChange={(value) => props.onChange(value)}
     items={[
-      { label: 'yes' },
-      { label: 'no' },
+      { label: '是' },
+      { label: '否' },
     ]}
   />
 ));
@@ -16,7 +16,7 @@ const BaseInput = observer((props) => (
 export const Common = [
   {
     key: 'empty',
-    label: 'is empty',
+    label: '为空',
     input: BaseInput,
   },
 ];
