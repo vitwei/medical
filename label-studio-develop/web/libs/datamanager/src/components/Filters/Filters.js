@@ -66,7 +66,7 @@ export const Filters = injector(({ views, currentView, filters }) => {
             />
           ))
         ) : (
-          <Elem name="empty">没有过滤选项应用中</Elem>
+          <Elem name="empty">尚未使用过滤器</Elem>
         )}
       </Elem>
       <Elem name="actions">
