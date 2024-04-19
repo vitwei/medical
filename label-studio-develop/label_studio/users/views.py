@@ -15,7 +15,7 @@ from organizations.forms import OrganizationSignupForm
 from organizations.models import Organization
 from rest_framework.authtoken.models import Token
 from users import forms
-from users.functions import login, proceed_registration
+from users.functions import login, proceed_registration,VIT_base_proceed_registration
 
 logger = logging.getLogger()
 
@@ -30,7 +30,7 @@ def logout(request):
         return redirect(redirect_url)
     return redirect('/')
 
-
+#VIT
 @enforce_csrf_checks
 def user_signup(request):
     """Sign up page"""
@@ -62,7 +62,7 @@ def user_signup(request):
         organization_form = OrganizationSignupForm(request.POST)
 
         if user_form.is_valid():
-            redirect_response = proceed_registration(request, user_form, organization_form, next_page)
+            redirect_response = VIT_base_proceed_registration(request, user_form, organization_form, next_page)
             if redirect_response:
                 return redirect_response
 
@@ -88,6 +88,7 @@ def user_signup(request):
             'token': token,
         },
     )
+
 
 
 @enforce_csrf_checks

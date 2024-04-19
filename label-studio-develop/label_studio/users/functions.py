@@ -129,8 +129,6 @@ def VIT_base_proceed_registration(request, user_form, organization_form, next_pa
     return response
 
 def VIT_super_save_user(request, next_page, user_form):
-    
-    
     """Save super user instance to DB"""
     user = user_form.save()
     user.username = user.email.split('@')[0]
@@ -275,6 +273,7 @@ def VIT_L1permission(useremail):
     'tasks_get'
     ]
     try:
+        VIT_delpermissionall(useremail)
         content_type = ContentType.objects.get_for_model(users.models.User)
         user=users.models.User.objects.get(email=useremail)
         for i in permissionlist:
@@ -306,6 +305,7 @@ def VIT_L2permission(useremail):
     'tasks_annotationlist_post'
     ]
     try:
+        VIT_delpermissionall(useremail)
         content_type = ContentType.objects.get_for_model(users.models.User)
         user=users.models.User.objects.get(email=useremail)
         for i in permissionlist:
@@ -343,6 +343,7 @@ def VIT_L3permission(useremail):
     'data_manager_view_super'
     ]
     try:
+        VIT_delpermissionall(useremail)
         content_type = ContentType.objects.get_for_model(users.models.User)
         user=users.models.User.objects.get(email=useremail)
         for i in permissionlist:
