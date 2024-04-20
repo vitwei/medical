@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加用户进入组织</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            color: #343a40;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+
+        button[type="submit"] {
+            padding: 8px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>添加用户进入组织</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="title">组织名称：</label>
+        <input type="text" id="title" name="title">
+        <label for="title">用户email：</label>
+        <input type="text" id="useremail" name="useremail">
+        <button type="submit">添加</button>
+    </form>
+
+    {% if item %}
+    <div class="success-message">
+        <p>成功添加!</p>
+        <p><strong>user:</strong> {{ item.email }}</p>
+        <p><strong>active_organization:</strong> {{ item.active_organization.title }}</p>
+    </div>
+    {% endif %}
+</body>
+</html>

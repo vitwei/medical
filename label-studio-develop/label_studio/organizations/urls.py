@@ -29,6 +29,14 @@ _api_urlpattens = [
 # TODO: these urlpatterns should be moved in core/urls with include('organizations.urls')
 urlpatterns = [
     path('organization/', views.simple_view, name='organization-simple'),
+    path('orglist/', views.orglist_view, name='organization-list'),
+    path('orglist/userlist', views.userlist_view, name='organization-people'),
+    path('orglist/userinfo', views.userinfo_view, name='organization-peopleinfo'),
+    path('orglist/createorg', views.createorg_view, name='organization-create'),
+    path('orglist/delorg', views.delorg_view, name='organization-del'),
+    path('orglist/adduser', views.adduser_view, name='user-add'),
+    path('orglist/deluser', views.deluser_view, name='user-del'),
+    path('orglist/moveuser', views.moveuser_view, name='user-move'),
     path('organization/webhooks', views.simple_view, name='organization-simple-webhooks'),
     path('people/', include(_urlpatterns)),
     # TODO: temporary route, remove as needed

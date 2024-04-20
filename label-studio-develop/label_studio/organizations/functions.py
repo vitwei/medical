@@ -21,23 +21,36 @@ def destroy_organization(org):
 def VIT_addusertoorganization(user,org_title):
     with transaction.atomic():
         if org_title==user.active_organization:
-            return "ok"
+            return True
         addorg=Organization.objects.get(title=org_title)
-        delorg=Organization.objects.get(organization=user.active_organization)
+        delorg=user.active_organization
         delorg.remove_user(user)
         addorg.add_user(user)
         user.active_organization = addorg
         user.save(update_fields=['active_organization'])
-    return "ok"
+        return True
+    return False
 
-def VIT_delusertoorganization(user,org_title):
+def VIT_delusertoorganization(user):
     with transaction.atomic():
-        delorg=Organization.objects.get(title=org_title)
+        delorg=user.active_organization
         if delorg.title=="TempOrganization":
-            return "ok"
+            return True
         addorg=Organization.objects.get(title='TempOrganization')
         delorg.remove_user(user)
         addorg.add_user(user)
         user.active_organization = addorg
         user.save(update_fields=['active_organization'])
-    return "ok"
+        return True
+    return False
+
+def VIT_moveusertoorganization(user,org_title):
+    with transaction.atomic():
+        if org_title==user.active_organization.title:
+            return True
+        addorg=Organization.objects.get(title=org_title)
+        addorg.add_user(user)
+        user.active_organization = addorg
+        user.save(update_fields=['active_organization'])
+        return True
+    return False

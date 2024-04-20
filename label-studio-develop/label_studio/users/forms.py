@@ -12,10 +12,10 @@ PASS_MAX_LENGTH = 64
 PASS_MIN_LENGTH = 8
 USERNAME_MAX_LENGTH = 30
 DISPLAY_NAME_LENGTH = 100
-USERNAME_LENGTH_ERR = 'Please enter a username 30 characters or fewer in length'
-DISPLAY_NAME_LENGTH_ERR = 'Please enter a display name 100 characters or fewer in length'
-PASS_LENGTH_ERR = 'Please enter a password 8-12 characters in length'
-INVALID_USER_ERROR = "The email and password you entered don't match."
+USERNAME_LENGTH_ERR = '请输入长度不超过30个字符的用户名'
+DISPLAY_NAME_LENGTH_ERR = '请输入长度不超过100个字符的显示名称'
+PASS_LENGTH_ERR = '请输入长度为8-12个字符的密码'
+INVALID_USER_ERROR = "您输入的电子邮件和密码不匹配"
 
 logger = logging.getLogger(__name__)
 
