@@ -1,11 +1,13 @@
 """This file and its contents are licensed under the Apache License 2.0. Please see the included NOTICE for copyright information and LICENSE for a copy of the license.
 """
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render
 from organizations.models import Organization
 from users.models import User
 from django.http import HttpResponse
 from organizations.functions import create_organization,destroy_organization,VIT_addusertoorganization,VIT_delusertoorganization,VIT_moveusertoorganization
+
+
 
 @login_required
 def organization_people_list(request):
@@ -20,7 +22,8 @@ def simple_view(request):
 def orglist_view(request):
         org=Organization.objects.all()
         return render(request, 'organizations/orgpeople.html', {'queryset': org})
-    
+
+@permission_required('auth.is_superuser', raise_exception=True)
 @login_required
 def userlist_view(request):
     if request.method == 'GET':
@@ -35,6 +38,7 @@ def userlist_view(request):
             error_message = "错误！请检查自己的提交数据"
             return HttpResponse(error_message)
         
+@permission_required('auth.is_superuser', raise_exception=True)
 @login_required
 def userinfo_view(request):
     if request.method == 'GET':
@@ -49,7 +53,8 @@ def userinfo_view(request):
         except:
             error_message = "错误！请检查自己的提交数据"
             return HttpResponse(error_message)
-        
+    
+@permission_required('auth.is_superuser', raise_exception=True)
 @login_required
 def createorg_view(request):
     if request.method == 'GET':
@@ -68,6 +73,7 @@ def createorg_view(request):
     error_message = "错误！请检查自己的提交数据"
     return HttpResponse(error_message)
         
+@permission_required('auth.is_superuser', raise_exception=True)
 @login_required
 def delorg_view(request):
     if request.method == 'GET':
@@ -83,7 +89,8 @@ def delorg_view(request):
         except:
             error_message = "错误！请检查自己的提交数据"
             return HttpResponse(error_message)
-        
+       
+@permission_required('auth.is_superuser', raise_exception=True)
 @login_required
 def adduser_view(request):
     if request.method == 'GET':
@@ -99,6 +106,7 @@ def adduser_view(request):
             error_message = "错误！请检查自己的提交数据"
             return HttpResponse(error_message)
 
+@permission_required('auth.is_superuser', raise_exception=True)
 @login_required
 def deluser_view(request):
     if request.method == 'GET':
@@ -113,6 +121,7 @@ def deluser_view(request):
             error_message = "错误！请检查自己的提交数据"
             return HttpResponse(error_message)
 
+@permission_required('auth.is_superuser', raise_exception=True)
 @login_required
 def moveuser_view(request):
     if request.method == 'GET':
