@@ -25,8 +25,7 @@ RUN --mount=type=cache,target=${YARN_CACHE_FOLDER},sharing=locked \
 COPY web .
 COPY pyproject.toml ../pyproject.toml
 RUN --mount=type=cache,target=${YARN_CACHE_FOLDER},sharing=locked \
-    --mount=type=bind,source=.git,target=../.git \
-    yarn run build && yarn version:libs
+    yarn run build 
 
 FROM ubuntu:22.04
 
@@ -52,7 +51,7 @@ RUN set -eux \
      --option APT::AutoRemove::SuggestsImportant=false && rm -rf /var/lib/apt/lists/* /tmp/*
 
 RUN --mount=type=cache,target=$PIP_CACHE_DIR,uid=1001,gid=0 \
-    pip3 install --upgrade pip setuptools && pip3 install poetry uwsgi uwsgitop
+    pip3 install --upgrade pip setuptools && pip3 install poetry uwsgi uwsgitop ipython
 
 # incapsulate nginx install & configure to a single layer
 RUN set -eux; \
