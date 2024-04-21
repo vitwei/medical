@@ -25,7 +25,8 @@ RUN --mount=type=cache,target=${YARN_CACHE_FOLDER},sharing=locked \
 COPY web .
 COPY pyproject.toml ../pyproject.toml
 RUN --mount=type=cache,target=${YARN_CACHE_FOLDER},sharing=locked \
-    yarn run build 
+    --mount=type=bind,source=.git,target=../.git \
+    yarn run build && yarn version:libs
 
 FROM ubuntu:22.04
 
@@ -51,7 +52,7 @@ RUN set -eux \
      --option APT::AutoRemove::SuggestsImportant=false && rm -rf /var/lib/apt/lists/* /tmp/*
 
 RUN --mount=type=cache,target=$PIP_CACHE_DIR,uid=1001,gid=0 \
-    pip3 install --upgrade pip setuptools && pip3 install poetry uwsgi uwsgitop ipython
+    pip3 install --upgrade pip setuptools && pip3 install poetry uwsgi uwsgitop
 
 # incapsulate nginx install & configure to a single layer
 RUN set -eux; \
@@ -80,6 +81,8 @@ COPY --chown=1001:0 label_studio/__init__.py ./label_studio/__init__.py
 RUN --mount=type=cache,target=$POETRY_CACHE_DIR \
     poetry check --lock && poetry install
 
+COPY --chown=1001:0 LICENSE LICENSE
+COPY --chown=1001:0 licenses licenses
 COPY --chown=1001:0 label_studio label_studio
 COPY --chown=1001:0 deploy deploy
 
