@@ -136,3 +136,18 @@ def moveuser_view(request):
         except:
             error_message = "错误！请检查自己的提交数据"
             return HttpResponse(error_message)
+
+@permission_required('auth.is_superuser', raise_exception=True)
+@login_required
+def userpermissions_view(request):
+    if request.method == 'GET':
+        return render(request, 'organizations/userpermissions.html')
+    if request.method == 'POST':
+        try:
+            useremail = request.POST.get('useremail')
+            user = User.objects.get(email=str(useremail))
+            queryset= user.user_permissions.all()
+            return render(request, 'organizations/userpermissions.html', {'queryset': queryset})
+        except:
+            error_message = "错误！请检查自己的提交数据"
+            return HttpResponse(error_message)
