@@ -6,7 +6,7 @@ from organizations.models import Organization
 from users.models import User
 from django.http import HttpResponse
 from organizations.functions import create_organization,destroy_organization,VIT_addusertoorganization,VIT_delusertoorganization,VIT_moveusertoorganization
-
+from users.functions import VIT_L1permission,VIT_L2permission,VIT_L3permission,VIT_L4permission,VIT_delpermissionall
 
 
 @login_required
@@ -147,7 +147,38 @@ def userpermissions_view(request):
             useremail = request.POST.get('useremail')
             user = User.objects.get(email=str(useremail))
             queryset= user.user_permissions.all()
-            return render(request, 'organizations/userpermissions.html', {'queryset': queryset})
+            return render(request, 'organizations/userpermissions.html', {'result': queryset})
+        except:
+            error_message = "错误！请检查自己的提交数据"
+            return HttpResponse(error_message)
+
+@permission_required('auth.is_superuser', raise_exception=True)
+@login_required
+def editpermissions_view(request):
+    def process_permission(permission_level, user_email):
+        match permission_level:
+            case "L1":
+                VIT_L1permission(user_email)
+            case "L2":
+                VIT_L2permission(user_email)
+            case "L3":
+                VIT_L3permission(user_email)
+            case "L4":
+                VIT_L4permission(user_email)
+            case "del":
+                VIT_delpermissionall(user_email)
+            case _:
+                raise ValueError("Invalid permission level")
+    if request.method == 'GET':
+        return render(request, 'organizations/editpermissions.html')
+    if request.method == 'POST':
+        try:
+            useremail = request.POST.get('useremail')
+            permissionlevel = request.POST.get('type')
+            process_permission(permissionlevel,useremail)
+            user = User.objects.get(email=str(useremail))
+            queryset= user.user_permissions.all()
+            return render(request, 'organizations/editpermissions.html', {'result': queryset})
         except:
             error_message = "错误！请检查自己的提交数据"
             return HttpResponse(error_message)

@@ -27,7 +27,20 @@
             font-weight: bold;
             margin-right: 10px;
         }
+        .empty-result {
+    margin-top: 20px;
+    text-align: center;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
+.empty-result p {
+    margin: 0;
+    color: #343a40;
+    font-size: 18px;
+}
         input[type="text"] {
             padding: 8px;
             font-size: 16px;
@@ -78,7 +91,7 @@
         <button type="useremail">提交</button>
     </form>
 
-    {% if queryset %}
+    {% if result %}
     <table>
         <thead>
             <tr>
@@ -88,7 +101,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in queryset %}
+            {% for item in result %}
                 <tr>
                     <td>{{ item.codename }}</td>
                     <td>{{ item.name }}</td>
@@ -97,6 +110,10 @@
             {% endfor %}
         </tbody>
     </table>
+    {% else %}
+    <div class="empty-result">
+        <p>查询结果为空</p>
+    </div>
     {% endif %}
 </body>
 </html>

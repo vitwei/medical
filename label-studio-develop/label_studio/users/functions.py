@@ -212,7 +212,7 @@ def VIT_addpermission(useremail,permissionname):
                 return 'OK'
             else:
                 return 'Error'
-        return 'OK'
+        return 'OK VIT_addpermission'
     except:
         return "Error please check permissionname"
     
@@ -231,7 +231,7 @@ def VIT_delpermission(useremail,permissionname):
                 return 'OK'
             else:
                 return 'Error'
-        return 'OK'
+        return 'OK VIT_delpermission'
     except:
         return "Error please check permissionname"
 
@@ -240,7 +240,7 @@ def VIT_delpermissionall(useremail):
     user=users.models.User.objects.get(email=useremail)
     user.user_permissions.clear()
     user.save()
-    return 'OK'
+    return 'OK VIT_delpermissionall'
 
 def VIT_addpermissionall(useremail):
     try:
@@ -259,6 +259,7 @@ def VIT_addpermissionall(useremail):
                     print(i+'----OK')
                 else:
                     print(i+'----Error')
+        user.save()
         print('success VIT_addpermissionall')
     except:
         return "Error VIT_addpermissionall"
@@ -288,7 +289,8 @@ def VIT_L1permission(useremail):
                     print(i+'----OK')
                 else:
                     print(i+'----Error')
-        print('success')
+        user.save()
+        print('success VIT_L1permission')
     except:
         return "Error"
 
@@ -320,7 +322,8 @@ def VIT_L2permission(useremail):
                     print(i+'----OK')
                 else:
                     print(i+'----Error')
-        print('success')
+        user.save()
+        print('success VIT_L2permission')
     except:
         return "Error"
 
@@ -358,7 +361,8 @@ def VIT_L3permission(useremail):
                     print(i+'----OK')
                 else:
                     print(i+'----Error')
-        print('success')
+        user.save()
+        print('success VIT_L3permission')
     except:
         return "Error"
 

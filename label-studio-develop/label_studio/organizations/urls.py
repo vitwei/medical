@@ -37,7 +37,8 @@ urlpatterns = [
     path('orglist/adduser', views.adduser_view, name='user-add'),
     path('orglist/deluser', views.deluser_view, name='user-del'),
     path('orglist/moveuser', views.moveuser_view, name='user-move'),    
-    path('orglist/userpermission', views.userpermissions_view, name='user-move'),
+    path('orglist/userpermission', views.userpermissions_view, name='permission-list'),
+    path('orglist/editpermission', views.editpermissions_view, name='permission-edit'),
     path('organization/webhooks', views.simple_view, name='organization-simple-webhooks'),
     path('people/', include(_urlpatterns)),
     # TODO: temporary route, remove as needed
