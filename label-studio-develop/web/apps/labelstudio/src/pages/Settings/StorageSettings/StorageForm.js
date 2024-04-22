@@ -36,7 +36,7 @@ export const StorageForm = forwardRef(({
     skip: true,
     type: "select",
     name: "storage_type",
-    label: "Storage Type",
+    label: "存储类型",
     disabled: !!storage,
     options: storageTypes.map(({ name, title }) => ({
       value: name, label: title,
@@ -78,7 +78,7 @@ export const StorageForm = forwardRef(({
   }, [formRef, target, type, storage]);
 
   const action = useMemo(() => {
-    return storage ? "updateStorage" : "createStorage";
+    return storage ? "更新存储" : "创建储存";
   }, [storage]);
 
   return (
@@ -97,17 +97,17 @@ export const StorageForm = forwardRef(({
       <Form.Actions valid={connectionValid} extra={(connectionValid !== null) && (
         <Block name="form-indicator">
           <Oneof value={connectionValid}>
-            <Elem tag="span" mod={{ type: "success" }} name="item" case={true}>Successfully connected!</Elem>
-            <Elem tag="span" mod={{ type: "fail" }} name="item" case={false}>Connection failed</Elem>
+            <Elem tag="span" mod={{ type: "success" }} name="item" case={true}>已成功连接！</Elem>
+            <Elem tag="span" mod={{ type: "fail" }} name="item" case={false}>连接失败</Elem>
           </Oneof>
         </Block>
       )}>
         <Input type="hidden" name="project" value={project}/>
         <Button.Group className={rootClass.elem('buttons')}>
           <Button type="button" waiting={checking} onClick={validateStorageConnection}>
-            Check Connection
+          检查连接
           </Button>
-          <Button type="submit" look="primary">{storage ? "Save" : "Add Storage"}</Button>
+          <Button type="submit" look="primary">{storage ? "保存" : "添加储存"}</Button>
         </Button.Group>
       </Form.Actions>
 

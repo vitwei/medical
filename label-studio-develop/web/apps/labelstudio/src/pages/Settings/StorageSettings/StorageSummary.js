@@ -70,7 +70,7 @@ export const StorageSummary = ({ target, storage, className, storageTypes = [] }
           <GSCStorage case="gcs" storage={storage}/>
           <AzureStorage case="azure" storage={storage}/>
           <RedisStorage case="redis" storage={storage}/>
-          <LocalStorage case="localfiles" storage={storage}/>
+          <LocalStorage case="本地文件" storage={storage}/>
         </Oneof>
 
         <DescriptionList.Item
@@ -89,7 +89,7 @@ export const StorageSummary = ({ target, storage, className, storageTypes = [] }
                 style={{ cursor: "pointer", borderBottom: "1px dashed gray" }}
                 onClick={handleButtonClick}
               >
-                Failed
+                失败
               </span>
             ) : storageStatus
           }

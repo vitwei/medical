@@ -51,8 +51,8 @@ export const StorageCard = ({
       extra={(
         <Dropdown.Trigger align="right" content={(
           <Menu size="compact" style={{ width: 110 }}>
-            <Menu.Item onClick={() => onEditStorage(storageData)}>Edit</Menu.Item>
-            <Menu.Item onClick={() => onDeleteStorage(storageData)}>Delete</Menu.Item>
+            <Menu.Item onClick={() => onEditStorage(storageData)}>修改</Menu.Item>
+            <Menu.Item onClick={() => onDeleteStorage(storageData)}>删除</Menu.Item>
           </Menu>
         )}>
           <Button type="link" style={{ width: 32, height: 32, marginRight: -10 }} icon={<FaEllipsisV/>}/>
@@ -72,11 +72,11 @@ export const StorageCard = ({
             onClick={startSync}
             disabled={notSyncedYet}
           >
-              Sync Storage
+              同步存储
           </Button>
           {notSyncedYet && (
             <div className={rootClass.elem('sync-count')}>
-              Syncing may take some time, please refresh the page to see the current status.
+              同步可能需要一些时间，请刷新页面以查看当前状态。
             </div>
           )}
         </div>

@@ -79,9 +79,9 @@ export const StorageSet = ({title, target, rootClass, buttonLabel}) => {
       ),
       footer: (
         <>
-          Save completed annotations to Amazon S3, Google Cloud, Microsoft Azure, or Redis.
+          将完成的注释保存到Amazon S3、Google Cloud、Microsoft Azure或Redis。
           <br/>
-          <a href="https://labelstud.io/guide/storage.html">See more in the documentation</a>.
+          <a href="https://labelstud.io/guide/storage.html">请参阅文档中的更多信息</a>.
         </>
       ),
     });
@@ -93,8 +93,8 @@ export const StorageSet = ({title, target, rootClass, buttonLabel}) => {
 
   const onDeleteStorage = useCallback(async (storage) => {
     confirm({
-      title: "Deleting storage",
-      body: "This action cannot be undone. Are you sure?",
+      title: "删除存储",
+      body: "此操作无法撤消。你确定吗？",
       buttonLook: "destructive",
       onOk: async () => {
         const response = await api.callApi('deleteStorage', {

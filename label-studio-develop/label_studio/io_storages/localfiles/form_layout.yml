@@ -2,10 +2,10 @@
 title_bucket_prefix: &title_bucket_prefix
   - type: text
     name: title
-    label: Storage Title
+    label: 储存器名称
   - type: text
     name: path
-    label: Absolute local path
+    label: 绝对路径
     required: true
 
 ImportStorage:
@@ -17,7 +17,7 @@ ImportStorage:
     fields:
       - type: text
         name: regex_filter
-        label: File Filter Regex
+        label: 文件过滤正则式
         placeholder: '.*csv or .*(jpe?g|png|tiff) or .\w+-\d+.text'
         validators:
           - regexp
@@ -29,8 +29,8 @@ ImportStorage:
         fields:
           - type: toggle
             name: use_blob_urls
-            label: Treat every bucket object as a source file
-            description: If unchecked, treat every bucket object as a JSON-formatted task. Optional
+            label: 将每个bucket对象视为源文件
+            description: 如果未选中，则将每个bucket对象视为JSON格式的任务。可选选项
 
 ExportStorage:
   - columnCount: 3

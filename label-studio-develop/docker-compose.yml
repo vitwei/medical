@@ -41,9 +41,13 @@ services:
       - POSTGRE_HOST=db
       - LABEL_STUDIO_HOST=${LABEL_STUDIO_HOST:-}
       - JSON_LOG=1
+      - LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true
+      - LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/label-studio/files
+
     #      - LOG_LEVEL=DEBUG
     volumes:
       - ./mydata:/label-studio/data:rw
+      - ./myfiles:/label-studio/files
     command: label-studio-uwsgi
 
   db:
