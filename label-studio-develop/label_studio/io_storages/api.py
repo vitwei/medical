@@ -4,7 +4,7 @@ import inspect
 import logging
 import os
 
-from core.permissions import all_permissions
+from core.permissions import all_permissions,iostorePermission
 from core.utils.io import read_yaml
 from django.conf import settings
 from drf_yasg import openapi as openapi
@@ -25,6 +25,7 @@ StoragePermission = load_func(settings.STORAGE_PERMISSION)
 
 
 class ImportStorageListAPI(generics.ListCreateAPIView):
+    permission_classes=[iostorePermission]
     permission_required = all_permissions.projects_change
     permission_classes = api_settings.DEFAULT_PERMISSION_CLASSES + [StoragePermission]
     parser_classes = (JSONParser, FormParser, MultiPartParser)
@@ -45,7 +46,7 @@ class ImportStorageListAPI(generics.ListCreateAPIView):
 
 class ImportStorageDetailAPI(generics.RetrieveUpdateDestroyAPIView):
     """RUD storage by pk specified in URL"""
-
+    permission_classes=[iostorePermission]
     permission_required = all_permissions.projects_change
     permission_classes = api_settings.DEFAULT_PERMISSION_CLASSES + [StoragePermission]
     parser_classes = (JSONParser, FormParser, MultiPartParser)
@@ -57,7 +58,7 @@ class ImportStorageDetailAPI(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ExportStorageListAPI(generics.ListCreateAPIView):
-
+    permission_classes=[iostorePermission]
     permission_required = all_permissions.projects_change
     permission_classes = api_settings.DEFAULT_PERMISSION_CLASSES + [StoragePermission]
     parser_classes = (JSONParser, FormParser, MultiPartParser)
@@ -90,6 +91,7 @@ class ExportStorageListAPI(generics.ListCreateAPIView):
 
 class ExportStorageDetailAPI(generics.RetrieveUpdateDestroyAPIView):
     """RUD storage by pk specified in URL"""
+    permission_classes=[iostorePermission]
 
     permission_required = all_permissions.projects_change
     permission_classes = api_settings.DEFAULT_PERMISSION_CLASSES + [StoragePermission]
@@ -102,6 +104,7 @@ class ExportStorageDetailAPI(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ImportStorageSyncAPI(generics.GenericAPIView):
+    permission_classes=[iostorePermission]
 
     permission_required = all_permissions.projects_change
     parser_classes = (JSONParser, FormParser, MultiPartParser)
@@ -124,6 +127,7 @@ class ImportStorageSyncAPI(generics.GenericAPIView):
 
 
 class ExportStorageSyncAPI(generics.GenericAPIView):
+    permission_classes=[iostorePermission]
 
     permission_required = all_permissions.projects_change
     parser_classes = (JSONParser, FormParser, MultiPartParser)
@@ -146,6 +150,7 @@ class ExportStorageSyncAPI(generics.GenericAPIView):
 
 
 class StorageValidateAPI(generics.CreateAPIView):
+    permission_classes=[iostorePermission]
 
     permission_required = all_permissions.projects_change
     parser_classes = (JSONParser, FormParser, MultiPartParser)
@@ -177,6 +182,7 @@ class StorageValidateAPI(generics.CreateAPIView):
 
 
 class StorageFormLayoutAPI(generics.RetrieveAPIView):
+    permission_classes=[iostorePermission]
 
     permission_required = all_permissions.projects_change
     parser_classes = (JSONParser, FormParser, MultiPartParser)

@@ -176,6 +176,9 @@ class User(UserMixin, AbstractBaseUser, PermissionsMixin, UserLastActivityMixin)
     ("tasks_annotations_put", "AnnotationAPI_update annotion"),
     ("tasks_annotations_patch", "AnnotationAPI_update annotion"),
     ("tasks_annotations_super", "AnnotationAPI_super"),
+
+    ("iostore_super", "IOstore_super"),
+
     ]
 
     @property

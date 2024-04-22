@@ -46,6 +46,7 @@ class AllPermissions(BaseModel):
     model_provider_connection_delete = 'model_provider_connection.delete'
 
 
+
 all_permissions = AllPermissions()
 
 
@@ -198,6 +199,8 @@ class mlPermission(BasePermission):
         if request.method == 'POST':
             if request.user.has_perm('users.ml_post'):
                 return True
+        if request.method == 'GET':
+            return True
         return False
 
 class TaskListPermission(BasePermission):
@@ -282,4 +285,26 @@ class censorPermission(BasePermission):
             if request.user.has_perm('users.tasks_annotations_super'):
                 return True
         return False
+    
+class iostorePermission(BasePermission):
+    message = "用户无权限 iostorePermission" 
+    def has_permission(self, request, view):
+        if request.user.is_superuser:
+            return True
+        if request.method == 'PATCH':
+            if request.user.has_perm('users.iostore_super'):
+                return True
+        if request.method == 'GET':
+            if request.user.has_perm('users.iostore_super'):
+                return True
+        if request.method == 'DELETE':
+            if request.user.has_perm('users.iostore_super'):
+                return True
+        if request.method == 'POST':
+            if request.user.has_perm('users.iostore_super'):
+                return True
+        return False
+
+
+
     

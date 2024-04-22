@@ -4,7 +4,7 @@ import logging
 
 import drf_yasg.openapi as openapi
 from core.feature_flags import flag_set
-from core.permissions import ViewClassPermission, all_permissions
+from core.permissions import ViewClassPermission, all_permissions,mlPermission
 from django.conf import settings
 from django.http import Http404
 from django.utils.decorators import method_decorator
@@ -65,6 +65,7 @@ logger = logging.getLogger(__name__)
     ),
 )
 class MLBackendListAPI(generics.ListCreateAPIView):
+    permission_classes=[mlPermission]
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     permission_required = ViewClassPermission(
         GET=all_permissions.projects_view,
@@ -136,6 +137,7 @@ class MLBackendListAPI(generics.ListCreateAPIView):
 )
 @method_decorator(name='put', decorator=swagger_auto_schema(auto_schema=None))
 class MLBackendDetailAPI(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes=[mlPermission]
     parser_classes = (JSONParser, FormParser, MultiPartParser)
     serializer_class = MLBackendSerializer
     permission_required = all_permissions.projects_change
@@ -193,6 +195,7 @@ class MLBackendDetailAPI(generics.RetrieveUpdateDestroyAPIView):
     ),
 )
 class MLBackendTrainAPI(APIView):
+    permission_classes=[mlPermission]
 
     permission_required = all_permissions.projects_change
 
@@ -235,6 +238,8 @@ class MLBackendTrainAPI(APIView):
     ),
 )
 class MLBackendPredictTestAPI(APIView):
+    permission_classes=[mlPermission]
+
     serializer_class = MLBackendSerializer
     permission_required = all_permissions.projects_change
 
