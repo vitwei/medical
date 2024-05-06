@@ -7,6 +7,9 @@ from rest_framework.permissions import BasePermission
 from pydantic import BaseModel
 
 import rules
+from django.conf import settings
+
+permissionpass=True
 
 logger = logging.getLogger(__name__)
 
@@ -82,7 +85,7 @@ class ProjectListPermission(BasePermission):
             ##要禁止创建项目必须禁止该projectlist_post选项
             if request.user.has_perm('users.projects_projectlist_post'):
                 return True
-        return False
+        return permissionpass
     
 class ProjectPermission(BasePermission):
     message = "用户无权限 ProjectPermission" 
@@ -105,7 +108,7 @@ class ProjectPermission(BasePermission):
         if request.method == 'POST':
             if request.user.has_perm('users.projects_project_post'):
                 return True
-        return False
+        return permissionpass
     
 class ProjectTaskListPermission(BasePermission):
     message = "用户无权限 ProjectTaskListPermission" 
@@ -122,7 +125,7 @@ class ProjectTaskListPermission(BasePermission):
         if request.method == 'POST':
             if request.user.has_perm('users.projects_projecttasklist_post'):
                 return True
-        return False    
+        return permissionpass    
     
 class ProjectimportPermission(BasePermission):
     message = "用户无权限 ProjectimportPermission" 
@@ -132,7 +135,7 @@ class ProjectimportPermission(BasePermission):
         if request.method == 'POST':
             if request.user.has_perm('users.data_import_post'):
                 return True
-        return False
+        return permissionpass
     
 class ProjectexportPermission(BasePermission):
     message = "用户无权限 ProjectexportPermission" 
@@ -143,7 +146,7 @@ class ProjectexportPermission(BasePermission):
         if request.method == 'GET':
             if request.user.has_perm('users.data_export_get'):
                 return True
-        return False
+        return permissionpass
 
 class dataactionPermission(BasePermission):
     message = "用户无权限 dataactionPermission" 
@@ -158,7 +161,7 @@ class dataactionPermission(BasePermission):
         if request.method == 'POST':
             if request.user.has_perm('users.data_manager_action_post'):
                 return True
-        return False
+        return permissionpass
 
 class dataviewPermission(BasePermission):
     message = "用户无权限 dataviewPermission" 
@@ -179,11 +182,11 @@ class dataviewPermission(BasePermission):
         if request.method == 'POST':
             if request.user.has_perm('users.data_manager_view_post'):
                 return True
-        return False
+        return permissionpass
     def has_object_permission(self, request, view, obj):
         if obj.user==request.user or request.user.has_perm('users.data_manager_view_super'):
             return True
-        return False
+        return permissionpass
 
 class mlPermission(BasePermission):
     message = "用户无权限 mlPermission" 
@@ -201,7 +204,7 @@ class mlPermission(BasePermission):
                 return True
         if request.method == 'GET':
             return True
-        return False
+        return permissionpass
 
 class TaskListPermission(BasePermission):
     message = "用户无权限 TaskListPermission" 
@@ -215,7 +218,7 @@ class TaskListPermission(BasePermission):
             ##要禁止创建项目必须禁止该projectlist_post选项
             if request.user.has_perm('users.tasks_taskslist_post'):
                 return True
-        return False
+        return permissionpass
 
 class TaskPermission(BasePermission):
     message = "用户无权限 TaskPermission" 
@@ -235,7 +238,7 @@ class TaskPermission(BasePermission):
         if request.method == 'PATCH':
             if request.user.has_perm('users.tasks_patch'):
                 return True
-        return False
+        return permissionpass
 
 class annotationlistPermission(BasePermission):
     message = "用户无权限 annotationlistPermission" 
@@ -249,7 +252,7 @@ class annotationlistPermission(BasePermission):
             ##要禁止创建项目必须禁止该projectlist_post选项
             if request.user.has_perm('users.tasks_annotationlist_post'):
                 return True
-        return False    
+        return permissionpass    
 
 class annotationsPermission(BasePermission):
     message = "用户无权限 annotationsPermission" 
@@ -269,12 +272,12 @@ class annotationsPermission(BasePermission):
                 return True
         if request.method == 'DELETE':
             return True
-        return False
+        return permissionpass
     
     def has_object_permission(self, request, view, obj):
         if obj.completed_by==request.user or request.user.has_perm('users.tasks_annotations_super'):
             return True
-        return False
+        return permissionpass
 
 class censorPermission(BasePermission):
     message = "用户无权限 censorPermission" 
@@ -284,7 +287,7 @@ class censorPermission(BasePermission):
         if request.method == 'PATCH':
             if request.user.has_perm('users.tasks_annotations_super'):
                 return True
-        return False
+        return permissionpass
     
 class iostorePermission(BasePermission):
     message = "用户无权限 iostorePermission" 
@@ -303,7 +306,7 @@ class iostorePermission(BasePermission):
         if request.method == 'POST':
             if request.user.has_perm('users.iostore_super'):
                 return True
-        return False
+        return permissionpass
 
 
 
