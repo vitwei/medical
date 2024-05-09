@@ -123,16 +123,7 @@ html, body {
   align-items: center;
 }
 
-.login_page_new_ui .left:after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 179px;
-  height: 239px;
-  background: url('../images/login-bg.svg') no-repeat center center;
-  background-size: contain;
-}
+
 
 .login_page_new_ui .left h2 {
   font-size: 24px;
