@@ -30,7 +30,7 @@ export const WebhookDeleteModal = ({onDelete}) => {
         <Button 
           className={rootClass.elem('width-button')} 
           onClick={()=>{ctrl.hide();}}>
-                Cancel
+                取消
         </Button>
         <Button 
           look="destructive"

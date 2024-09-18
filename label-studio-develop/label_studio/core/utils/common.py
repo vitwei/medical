@@ -447,6 +447,7 @@ def collect_versions(force=False):
         return settings.VERSIONS
 
     # main pypi package
+    label_studio.__version__="1.0.0.dev0"
     result = {
         'release': label_studio.__version__,
         'label-studio-os-package': {

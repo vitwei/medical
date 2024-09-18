@@ -65,18 +65,6 @@ export const PredictionsSettings = () => {
             icon={<IconEmptyPredictions />}
             title="尚未上传预测"
             description="预测可以用于预先标记数据或验证模型。您可以从多个模型版本上传和选择预测。也可以在“模型”选项卡中连接活动模型。"
-            footer={(
-              <div>
-                Need help?
-                <br />
-                <a
-                  href="https://labelstud.io/guide/predictions"
-                  target="_blank"
-                >
-                  Learn more on how to upload predictions in our docs
-                </a>
-              </div>
-            )}
           />
         )}
 

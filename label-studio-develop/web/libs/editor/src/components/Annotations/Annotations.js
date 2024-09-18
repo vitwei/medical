@@ -158,7 +158,7 @@ const Annotation = observer(({ item, store }) => {
               onConfirm={confirm}
               okText="Delete"
               okType="danger"
-              cancelText="Cancel"
+              cancelText="取消"
             >
               <Button size="small" danger style={{ background: 'transparent' }}>
                 <DeleteOutlined />

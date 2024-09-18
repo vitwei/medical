@@ -35,7 +35,7 @@ const WebhookList = ({ onSelectActive, onAddWebhook, webhooks, fetchWebhooks }) 
     <Block name='webhook'>
       <Elem name='controls'>
         <Button onClick={onAddWebhook}>
-        Add Webhook
+        添加 Webhook
         </Button>
       </Elem>
       <Elem>
@@ -58,13 +58,13 @@ const WebhookList = ({ onSelectActive, onAddWebhook, webhooks, fetchWebhooks }) 
                         {obj.url}
                       </Elem>
                       <Elem name='item-date'>
-                  Created {format(new Date(obj.created_at), 'dd MMM yyyy, HH:mm')}
+                  创建 {format(new Date(obj.created_at), 'dd MMM yyyy, HH:mm')}
                       </Elem>
                       <Elem name='item-control'>
                         <Button
                           onClick={() => onSelectActive(obj.id)}
                           icon={<LsPencil />}
-                        >Edit</Button>
+                        >编辑</Button>
                         <Button
                           onClick={()=> WebhookDeleteModal({
                             onDelete: async ()=>{
@@ -74,7 +74,7 @@ const WebhookList = ({ onSelectActive, onAddWebhook, webhooks, fetchWebhooks }) 
                           })}
                           look='danger'
                           icon={<LsCross />}
-                        >Delete</Button>
+                        >删除</Button>
                       </Elem>
                     </Elem>
                   ),

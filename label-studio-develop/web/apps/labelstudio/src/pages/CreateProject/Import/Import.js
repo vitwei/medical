@@ -372,7 +372,6 @@ export const ImportPage = ({
         </Upload>
       </main>
 
-      <Footer />
     </div>
   );
 };

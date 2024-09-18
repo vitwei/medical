@@ -56,21 +56,7 @@ export const GeneralSettings = () => {
               labelProps={{ large: true }}
               style={{ minHeight: 128 }}
             />
-            {isFF(FF_LSDV_E_297) && (
-              <Block name="workspace-placeholder">
-                <Elem name="badge-wrapper">
-                  <Elem name="title">Workspace</Elem>
-                  <EnterpriseBadge />
-                </Elem>
-                <Select placeholder="Select an option" disabled options={[]} />
-                <Caption>
-                  Simplify project management by organizing projects into workspaces. <a target="_blank" href={createURL("https://docs.humansignal.com/guide/manage_projects#Create-workspaces-to-organize-projects", {
-                  experiment: 'project_settings_tip',
-                  treatment: 'simplify_project_management',
-                })}>Learn more</a>
-                </Caption>
-              </Block>
-            )}
+            
             <RadioGroup name="color" label="Color" size="large" labelProps={{ size: "large" }}>
               {colors.map(color => (
                 <RadioGroup.Button key={color} value={color}>
@@ -88,36 +74,17 @@ export const GeneralSettings = () => {
                   description={description}
                 />
               ))}
-              {isFF(FF_LSDV_E_297) && (
-                <RadioGroup.Button
-                  key="uncertainty-sampling"
-                  value=""
-                  label={<>Uncertainty sampling <EnterpriseBadge /></>}
-                  disabled
-                  description={(
-                    <>
-                      Tasks are chosen according to model uncertainty score (active learning mode). <a target="_blank" href={createURL("https://docs.humansignal.com/guide/active_learning", {
-                      experiment: 'project_settings_workspace',
-                      treatment: 'workspaces',
-                    })}>Learn more</a>
-                    </>
-                  )}
-                />
-              )}
             </RadioGroup>
           </Form.Row>
 
           <Form.Actions>
             <Form.Indicator>
-              <span case="success">Saved!</span>
+              <span case="success">保存成功!</span>
             </Form.Indicator>
-            <Button type="submit" look="primary" style={{ width: 120 }}>Save</Button>
+            <Button type="submit" look="primary" style={{ width: 120 }}>保存</Button>
           </Form.Actions>
         </Form>
       </Elem>
-      {isFF(FF_LSDV_E_297) && (
-        <HeidiTips collection="projectSettings" />
-      )}
     </Block>
   );
 };

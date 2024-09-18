@@ -70,7 +70,7 @@ export const confirm = ({ okText, onOk, cancelText, onCancel, buttonLook, ...pro
           size="compact"
           autoFocus
         >
-          {cancelText ?? "Cancel"}
+          {cancelText ?? "取消"}
         </Button>
 
         <Button

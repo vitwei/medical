@@ -65,7 +65,7 @@ export const PeopleList = ({ onSelect, selectedUser, defaultSelected }) => {
                 <Elem name="column" mix="avatar"/>
                 <Elem name="column" mix="email">Email</Elem>
                 <Elem name="column" mix="name">Name</Elem>
-                <Elem name="column" mix="last-activity">Last Activity</Elem>
+                <Elem name="column" mix="last-activity">最后活跃与</Elem>
               </Elem>
               <Elem name="body">
                 {usersList.map(({ user }) => {

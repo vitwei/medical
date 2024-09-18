@@ -27,22 +27,22 @@
     <form action="{% url 'user-detail' pk=user.pk %}" method="patch" class="user__info">
       <input type="hidden" name="_method" value="patch"/>
 
-      <header>Account info</header>
+      <header>账户信息</header>
       <ul>
         <li class="field">
           <label for="">E-mail</label>
           <input type="text" class="ls-input" value="{{user.email}}" disabled />
         </li>
         <li class="field">
-          <label for="">First Name</label>
+          <label for="">姓</label>
           <input type="text" class="ls-input" name="first_name" value="{{user.first_name}}" />
         </li>
         <li class="field">
-          <label for="">Last Name</label>
+          <label for="">名</label>
           <input type="text" class="ls-input" name="last_name" value="{{user.last_name}}" />
         </li>
         <li class="field">
-          <label for="">Phone</label>
+          <label for="">电话</label>
           <input type="text" class="ls-input" name="phone" value="{{user.phone}}" />
           <!-- <span>We'll send you sms with code if you change your number</span>
           <span class="error">Incorrect phone number!</span> -->
@@ -64,7 +64,7 @@
           </div>
 
           <button class="ls-button ls-button_look_danger" name="delete-avatar" type="button">
-            Delete
+            删除
           </button>
 
           <input class="file-input" type="file" name="avatar" value="Choose"
@@ -77,53 +77,19 @@
         </div> -->
       </div>
       <footer>
-        <p class="secondary">Registered {{ user.date_joined|date:"M j, Y" }}, user ID {{ user.id }}</p>
-        <button class="ls-button ls-button_look_primary" onclick="smart_submit()">Save</button>
+        <p class="secondary">注册于 {{ user.date_joined|date:"M j, Y" }}, user ID {{ user.id }}</p>
+        <button class="ls-button ls-button_look_primary" onclick="smart_submit()">保存</button>
       </footer>
     </form>
 
-    <!-- Token -->
-    <form action="" class="access_token__info">
-      <header>Access Token</header>
-      <div class="field field--wide">
-        <label for="access_token">Use this token to authenticate with our API:</label>
-        <input id="access_token" class="ls-input" name="access_token" type="text" value="{{token}}" readonly />
-        <p class="actions">
-          <button type="button" class="blinking-status ls-button" data-copy="access_token">Copy</button>
-          <button type="button" class="blinking-status ls-button" name="renew">Renew</button>
-        </p>
-      </div>
-      <!-- Example -->
-      <div class="field field--wide">
-        <label for="example_fetch">Example fetch projects data:</label>
-        <textarea id="example_fetch" class="example_code ls-textarea" type="text" readonly
-                  style="height: 92px; font-size: 14px">
-          {% if settings.HOSTNAME %}
-            curl -X GET {{ settings.HOSTNAME }}/api/projects/ -H 'Authorization: Token {{token}}'
-          {% else %}
-            curl -X GET http://localhost:8080/api/projects/ -H 'Authorization: Token {{token}}'
-          {% endif %}
-        </textarea>
-        <p class="actions">
-          <button type="button" class="blinking-status ls-button" data-copy="example_fetch">Copy</button>
-          <a class="ls-button"
-             {% if settings.VERSION_EDITION == 'Enterprise' %}
-             href="https://docs.heartex.com/guide/api.html"
-             {% else %}
-             href="https://labelstud.io/guide/api.html"
-             {% endif %} target="_blank">Documentation
-          </a>
-        </p>
-      </div>
-    </form>
-
+    
 
     <!-- Organization -->
     <form action="" class="organization block-info" id="organization">
       <header>
         {{ user.active_organization.title }}
         <br>
-        <sub style="font-size: 16px; margin-top: 0; color: rgba(0,0,0,0.2); ">Your active organization</sub>
+        <sub style="font-size: 16px; margin-top: 0; color: rgba(0,0,0,0.2); ">你所处的组织</sub>
       </header>
 
       <table>
@@ -132,49 +98,17 @@
             <tr><td>Your role</td><td>{{ user.get_pretty_role }}</td></tr>
           {% endif %}
         {% endwith %}
-        <tr><td>Annotations completed by you</td><td>{{ user.active_organization_annotations.count }}</td></tr>
-        <tr><td>Projects contributed by you</td><td>{{ user.active_organization_contributed_project_number }}</td></tr>
+        <tr><td>你已完成的标注</td><td>{{ user.active_organization_annotations.count }}</td></tr>
+        <tr><td>你已共享的项目</td><td>{{ user.active_organization_contributed_project_number }}</td></tr>
         <tr><td></td><td></td></tr>
-        <tr><td style="min-width: 75px">Organization ID</td><td>{{ user.active_organization.id }}</td></tr>
-        <tr><td>Organization owner</td><td>{{ user.active_organization.created_by }}</td></tr>
-        <tr><td>Organization created at</td><td>{{ user.active_organization.created_at }}</td></tr>
+        <tr><td style="min-width: 75px">组织 ID</td><td>{{ user.active_organization.id }}</td></tr>
+        <tr><td>组织拥有人</td><td>{{ user.active_organization.created_by }}</td></tr>
+        <tr><td>组织创建于/td><td>{{ user.active_organization.created_at }}</td></tr>
       </table>
 
     </form>
 
-    <!-- Notifications -->
-    <form action="{% url 'user-detail' pk=user.pk %}?update-notifications=1" method="patch" class="notifications block-info" id="notifications">
-      <header>
-        Notifications
-        <br>
-        <sub style="font-size: 16px; margin-top: 0; color: rgba(0,0,0,0.2);">Email and other notifications</sub>
-      </header>
 
-      <table>
-        <tr><td style="{% if user.allow_newsletters is None %}border: 1px red solid; border-radius: 5px{% endif %}">
-
-          <input name="email" type="hidden" value="{{ user.email }}">
-          <input name="first_name" type="hidden" value="{{ user.first_name }}">
-          <input name="last_name" type="hidden" value="{{ user.last_name }}">
-
-          <input name="allow_newsletters" type="hidden"
-                 value="{% if user.allow_newsletters is None %}true{% else %}{{ user.allow_newsletters|yesno:"false,true" }}{% endif %}">
-
-          <input name="allow_newsletters_visual" id="allow_newsletters_visual" type="checkbox"
-                 style="width: auto;"
-                 {% if user.allow_newsletters %}checked="true"{% endif %}
-                 onclick="smart_submit()">
-
-          <label for="allow_newsletters_visual" style="display: inline-block; cursor: pointer; margin-top: -10px">
-            Get the latest news & tips from Heidi
-            <img src="{{ settings.HOSTNAME }}{% static 'images/heidi.png' %}" alt="Heidi"
-                 width="25" style="display: inline; margin: 0; position: relative; top: 5px; left: 0">
-          </label>
-
-        </td></tr>
-      </table>
-
-    </form>
 
 
   </div>

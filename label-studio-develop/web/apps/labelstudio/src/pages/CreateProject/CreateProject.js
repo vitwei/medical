@@ -36,23 +36,7 @@ const ProjectName = ({ name, setName, onSaveName, onSubmit, error, description, 
         onChange={e => setDescription(e.target.value)}
       />
     </div>
-    {isFF(FF_LSDV_E_297) && (
-      <div className="field field--wide">
-        <label>
-          Workspace
-          <EnterpriseBadge />
-        </label>
-        <Select placeholder="Select an option" disabled options={[]} />
-        <Caption>
-          Simplify project management by organizing projects into workspaces.
-          <a href={createURL('https://docs.humansignal.com/guide/manage_projects#Create-workspaces-to-organize-projects', {
-          experiment: "project_creation_dropdown",
-          treatment: "simplify_project_management",
-        })} target="_blank">Learn more</a>
-        </Caption>
-        <HeidiTips collection="projectCreation" />
-      </div>
-    )}
+
   </form>
 );
 
@@ -151,7 +135,7 @@ export const CreateProject = ({ onClose }) => {
     >
       <div className={rootClass}>
         <Modal.Header>
-          <h1>Create Project</h1>
+          <h1>创建项目</h1>
           <ToggleItems items={steps} active={step} onSelect={setStep} />
 
           <Space>

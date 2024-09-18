@@ -463,11 +463,11 @@ const Configurator = ({ columns, config, project, template, setTemplate, onBrows
           <Form.Actions size="small" extra={configure === "code" && extra} valid>
             {saved && (
               <Block name="form-indicator">
-                <Elem tag="span" mod={{ type: 'success' }} name="item">Saved!</Elem>
+                <Elem tag="span" mod={{ type: 'success' }} name="item">保存成功!</Elem>
               </Block>
             )}
             <Button look="primary" size="compact" style={{ width: 120 }} onClick={onSave} waiting={waiting}>
-              {waiting ? "Saving..." : "Save"}
+              {waiting ? "保存中..." : "保存"}
             </Button>
           </Form.Actions>
         )}

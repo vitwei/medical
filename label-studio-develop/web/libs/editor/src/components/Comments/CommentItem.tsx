@@ -150,7 +150,7 @@ export const CommentItem: FC<any> = observer(
                             }
                           }}
                         >
-                          {isEditMode ? 'Cancel edit' : 'Edit'}
+                          {isEditMode ? '取消编辑' : '编辑'}
                         </Menu.Item>
                         {!isConfirmDelete && (
                           <Menu.Item

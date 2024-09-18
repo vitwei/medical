@@ -64,16 +64,6 @@ export const AnnotationSettings = () => {
                 description={
                   <span>
                     启用并选择要用于预标记的预测集
-                    Predictions will be pre-loaded in {" "}
-                    <a
-                      style={{ color: "rgb(105 129 185)" }}
-                      target="_blank" href="https://labelstud.io/guide/labeling.html#Choose-which-tasks-to-label"
-                    >Label&nbsp;All&nbsp;Tasks</a>{" "}
-                    and {" "}
-                    <a
-                      style={{ color: "rgb(105 129 185)" }}
-                      target="_blank" href="https://labelstud.io/guide/get_started#Interface"
-                    >Quick View</a>.
                   </span>
                 }
                 name="show_collab_predictions"
@@ -90,10 +80,10 @@ export const AnnotationSettings = () => {
 
           <Form.Actions>
             <Form.Indicator>
-              <span case="success">Saved!</span>
+              <span case="success">保存成功!</span>
             </Form.Indicator>
             <Button type="submit" look="primary" style={{ width: 120 }}>
-              Save
+              保存
             </Button>
           </Form.Actions>
         </Form>
